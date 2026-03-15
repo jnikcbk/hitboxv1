@@ -3,132 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cussa Second Brain</title>
+    <title>Cussa Brain Master</title>
     <style>
-        :root { --bg: #050505; --card: #111; --primary: #7c3aed; --urgent: #ef4444; --important: #f59e0b; --text: #e5e7eb; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        :root { --primary: #00d2ff; --bg: #0f172a; --card: #1e293b; --success: #10b981; --error: #ef4444; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         
-        .header { text-align: center; margin-bottom: 30px; }
-        .header h1 { font-size: 2.5rem; background: linear-gradient(to right, #7c3aed, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; }
+        .container { background: var(--card); padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 350px; text-align: center; border: 1px solid #334155; }
+        h1 { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; }
         
-        /* Pomodoro Section */
-        .focus-zone { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #222; margin-bottom: 30px; width: 100%; max-width: 400px; text-align: center; }
-        #timer { font-size: 3.5rem; font-weight: bold; font-variant-numeric: tabular-nums; color: var(--primary); }
+        .stats { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; font-size: 0.9rem; color: #94a3b8; }
         
-        /* Eisenhower Matrix */
-        .matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 900px; }
-        .quadrant { background: var(--card); border-radius: 12px; padding: 15px; min-height: 200px; border: 1px solid #222; }
-        .quadrant h3 { margin-top: 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-        .q1 { border-top: 4px solid var(--urgent); }    /* Quan trọng & Khẩn cấp */
-        .q2 { border-top: 4px solid var(--important); } /* Quan trọng & Không khẩn cấp */
-        .q3 { border-top: 4px solid #3b82f6; }          /* Không quan trọng & Khẩn cấp */
-        .q4 { border-top: 4px solid #6b7280; }          /* Không quan trọng & Không khẩn cấp */
+        #question { font-size: 3rem; font-weight: 800; margin: 20px 0; letter-spacing: 2px; }
+        
+        input { width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #334155; background: #0f172a; color: white; font-size: 1.5rem; text-align: center; outline: none; box-sizing: border-box; transition: 0.3s; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 210, 255, 0.3); }
+        
+        .progress-bar { height: 6px; background: #334155; border-radius: 3px; margin-top: 25px; overflow: hidden; }
+        #progress { height: 100%; background: var(--primary); width: 100%; transition: linear; }
 
-        .task-input { background: #1a1a1a; border: 1px solid #333; color: white; padding: 8px; border-radius: 5px; width: 100%; box-sizing: border-box; margin-bottom: 10px; }
-        ul { list-style: none; padding: 0; }
-        li { background: #1a1a1a; margin-bottom: 5px; padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
-        li button { background: none; border: none; color: #555; cursor: pointer; }
-        li button:hover { color: #ef4444; }
-
-        .stats { margin-top: 30px; color: #888; font-size: 0.9rem; }
+        .game-over { display: none; }
+        button { background: var(--primary); color: #0f172a; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>CUSSA BRAIN</h1>
-        <p>Tối ưu hóa tư duy & Năng suất</p>
-    </div>
+    <div class="container" id="game-container">
+        <div class="stats">
+            <span>SCORE: <span id="score">0</span></span>
+            <span>HIGH: <span id="high-score">0</span></span>
+        </div>
+        
+        <h1>BRAIN MASTER</h1>
+        
+        <div id="game-ui">
+            <div id="question">12 + 8</div>
+            <input type="number" id="answer" placeholder="?" autofocus autocomplete="off">
+            <div class="progress-bar">
+                <div id="progress"></div>
+            </div>
+        </div>
 
-    <div class="focus-zone">
-        <div id="timer">25:00</div>
-        <div style="margin-top: 10px;">
-            <button onclick="startTimer()" style="background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Bắt đầu tập trung</button>
-            <button onclick="resetTimer()" style="background: transparent; color: #888; border: none; cursor: pointer;">Reset</button>
+        <div id="result-ui" class="game-over">
+            <h2 style="color: var(--error);">GAME OVER</h2>
+            <p id="final-stats"></p>
+            <button onclick="startGame()">THỬ LẠI</button>
         </div>
-    </div>
-
-    <div class="matrix">
-        <div class="quadrant q1">
-            <h3 style="color: var(--urgent);">P1: Khẩn cấp & Quan trọng</h3>
-            <input type="text" class="task-input" placeholder="+ Thêm việc cần làm ngay..." onkeypress="addTask(event, 'list1')">
-            <ul id="list1"></ul>
-        </div>
-        <div class="quadrant q2">
-            <h3 style="color: var(--important);">P2: Quan trọng (Lên lịch)</h3>
-            <input type="text" class="task-input" placeholder="+ Thêm việc để phát triển bản thân..." onkeypress="addTask(event, 'list2')">
-            <ul id="list2"></ul>
-        </div>
-        <div class="quadrant q3">
-            <h3 style="color: #3b82f6;">P3: Khẩn cấp (Ủy quyền)</h3>
-            <input type="text" class="task-input" placeholder="+ Thêm việc nhờ người khác..." onkeypress="addTask(event, 'list3')">
-            <ul id="list3"></ul>
-        </div>
-        <div class="quadrant q4">
-            <h3 style="color: #6b7280;">P4: Loại bỏ (Giải trí lướt web)</h3>
-            <input type="text" class="task-input" placeholder="+ Thêm việc làm tốn thời gian..." onkeypress="addTask(event, 'list4')">
-            <ul id="list4"></ul>
-        </div>
-    </div>
-
-    <div class="stats" id="brainPower">
-        Hiệu suất bộ não: $P_{brain} = 0\%$
     </div>
 
     <script>
-        // --- LOGIC POMODORO ---
-        let timeLeft = 25 * 60;
-        let timerId = null;
+        let score = 0;
+        let timeLeft = 100;
+        let timerId;
+        let correctAnswer;
+        let highScore = localStorage.getItem('cussa_high_score') || 0;
+        
+        document.getElementById('high-score').innerText = highScore;
+        const answerInput = document.getElementById('answer');
 
-        function updateDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            document.getElementById('timer').innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        function generateQuestion() {
+            const operators = ['+', '-', '*'];
+            const op = operators[Math.floor(Math.random() * operators.length)];
+            let n1, n2;
+
+            if (op === '*') {
+                n1 = Math.floor(Math.random() * 12) + 2;
+                n2 = Math.floor(Math.random() * 12) + 2;
+            } else {
+                n1 = Math.floor(Math.random() * 50) + 1;
+                n2 = Math.floor(Math.random() * 50) + 1;
+            }
+
+            document.getElementById('question').innerText = `${n1} ${op} ${n2}`;
+            correctAnswer = eval(`${n1} ${op} ${n2}`);
         }
 
-        function startTimer() {
-            if (timerId) return;
-            timerId = setInterval(() => {
-                timeLeft--;
-                updateDisplay();
-                if (timeLeft === 0) {
-                    clearInterval(timerId);
-                    alert("Đã hết thời gian tập trung! Nghỉ chút nhé.");
-                }
-            }, 1000);
+        function startGame() {
+            score = 0;
+            timeLeft = 100;
+            document.getElementById('score').innerText = score;
+            document.getElementById('game-ui').style.display = 'block';
+            document.getElementById('result-ui').style.display = 'none';
+            answerInput.value = '';
+            answerInput.focus();
+            generateQuestion();
+            resetTimer();
         }
 
         function resetTimer() {
             clearInterval(timerId);
-            timerId = null;
-            timeLeft = 25 * 60;
-            updateDisplay();
+            timeLeft = 100;
+            timerId = setInterval(() => {
+                timeLeft -= 1.5; // Tốc độ giảm thanh thời gian
+                document.getElementById('progress').style.width = timeLeft + '%';
+                if (timeLeft <= 0) endGame();
+            }, 100);
         }
 
-        // --- LOGIC MA TRẬN ---
-        function addTask(event, listId) {
-            if (event.key === 'Enter' && event.target.value !== "") {
-                const text = event.target.value;
-                const li = document.createElement('li');
-                li.innerHTML = `${text} <button onclick="this.parentElement.remove(); updateStats();">✕</button>`;
-                document.getElementById(listId).appendChild(li);
-                event.target.value = "";
-                updateStats();
+        function endGame() {
+            clearInterval(timerId);
+            document.getElementById('game-ui').style.display = 'none';
+            document.getElementById('result-ui').style.display = 'block';
+            
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('cussa_high_score', highScore);
+                document.getElementById('high-score').innerText = highScore;
             }
+
+            // Công thức tính độ nhạy não bộ: A = accuracy
+            const accuracy = score > 0 ? Math.round((score / (score + 1)) * 100) : 0;
+            document.getElementById('final-stats').innerHTML = `Điểm của bạn: ${score}<br>Độ nhạy não bộ: $S = ${accuracy}\\%$`;
         }
 
-        function updateStats() {
-            // Công thức giả định về hiệu suất: 
-            // Hiệu suất tăng khi có nhiều task ở P1, P2 và ít task ở P4
-            const q1 = document.getElementById('list1').children.length;
-            const q2 = document.getElementById('list2').children.length;
-            const q4 = document.getElementById('list4').children.length;
-            
-            const score = Math.max(0, (q1 * 10 + q2 * 15) - (q4 * 20));
-            document.getElementById('brainPower').innerHTML = `Hiệu suất bộ não: $P_{brain} = ${score}\\%$`;
-            
-            // Vẽ lại công thức nếu có MathJax hoặc để text thuần
-        }
+        answerInput.addEventListener('input', () => {
+            if (parseInt(answerInput.value) === correctAnswer) {
+                score++;
+                document.getElementById('score').innerText = score;
+                answerInput.value = '';
+                generateQuestion();
+                resetTimer(); // Reset thời gian khi trả lời đúng
+            }
+        });
+
+        startGame();
     </script>
 </body>
 </html>
