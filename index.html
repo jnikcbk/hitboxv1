@@ -6,66 +6,72 @@
     <title>Kaizen Music - Nhạc Của Tâm</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
+        
         body {
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
             overflow: hidden;
-            font-family: 'Courier New', Courier, monospace;
         }
-        /* Hiệu ứng hào quang xanh */
-        .glow-box {
-            box-shadow: 0 0 50px rgba(59, 130, 246, 0.2);
-            border: 1px solid rgba(59, 130, 246, 0.3);
+
+        /* Đĩa nhạc xoay */
+        .vinyl-record {
+            background: repeating-radial-gradient(#111, #111 2px, #222 3px, #111 4px);
+            animation: spin 15s linear infinite;
         }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         /* Hiệu ứng sóng nhạc giả lập */
-        .bar {
-            width: 4px;
-            background: #3b82f6;
-            margin: 0 2px;
-            border-radius: 10px;
-            animation: bounce 1s ease-in-out infinite;
+        .wave-bar {
+            @apply w-1 bg-cyan-500 rounded-full;
+            animation: wave 1.2s ease-in-out infinite;
         }
-        @keyframes bounce {
-            0%, 100% { height: 10px; }
+
+        @keyframes wave {
+            0%, 100% { height: 8px; }
             50% { height: 40px; }
         }
     </style>
 </head>
-<body>
+<body class="flex items-center justify-center h-screen bg-neutral-950">
 
-    <div class="glow-box bg-zinc-950 p-8 rounded-3xl w-full max-w-lg text-center">
-        <div class="mb-6">
-            <h1 class="text-blue-500 font-black text-2xl tracking-tighter italic uppercase">Detective Audio Log</h1>
-            <p class="text-zinc-500 text-[10px] tracking-[0.3em] mt-1">DECODING: NHẠC CỦA TÂM VOL 6</p>
+    <div class="fixed inset-0 bg-gradient-to-tr from-cyan-900/20 to-purple-900/20 opacity-40"></div>
+
+    <div class="relative z-10 flex flex-col items-center">
+        <div class="relative mb-10">
+            <div class="vinyl-record w-64 h-64 rounded-full border-4 border-zinc-800 shadow-[0_0_50px_rgba(0,255,255,0.2)] flex items-center justify-center">
+                <div class="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
+                    <div class="w-4 h-4 rounded-full bg-cyan-500 shadow-[0_0_10px_#06b6d4]"></div>
+                </div>
+            </div>
+            <div class="absolute -top-4 -right-8 w-4 h-32 bg-zinc-700 origin-top rotate-[25deg] rounded-full border-l border-white/10"></div>
         </div>
 
-        <div class="flex items-center justify-center h-12 mb-6">
-            <div class="bar" style="animation-delay: 0.1s"></div>
-            <div class="bar" style="animation-delay: 0.3s"></div>
-            <div class="bar" style="animation-delay: 0.5s"></div>
-            <div class="bar" style="animation-delay: 0.2s"></div>
-            <div class="bar" style="animation-delay: 0.4s"></div>
-            <div class="bar" style="animation-delay: 0.6s"></div>
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-black tracking-widest text-white uppercase italic">Nhạc Của Tâm</h1>
+            <p class="text-cyan-400 text-sm mt-2 tracking-[0.5em]">VOL. 6 - DHD</p>
         </div>
 
-        <div class="rounded-2xl overflow-hidden border border-white/10 bg-black shadow-inner">
-            <iframe 
-                width="100%" 
-                height="300" 
-                scrolling="no" 
-                frameborder="no" 
-                allow="autoplay" 
-                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1785532599&color=%233b82f6&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+        <div class="flex items-center gap-1 h-12 mb-8">
+            <div class="wave-bar" style="animation-delay: 0.1s"></div>
+            <div class="wave-bar" style="animation-delay: 0.3s"></div>
+            <div class="wave-bar" style="animation-delay: 0.5s"></div>
+            <div class="wave-bar" style="animation-delay: 0.2s"></div>
+            <div class="wave-bar" style="animation-delay: 0.4s"></div>
+            <div class="wave-bar" style="animation-delay: 0.6s"></div>
+            <div class="wave-bar" style="animation-delay: 0.1s"></div>
+            <div class="wave-bar" style="animation-delay: 0.3s"></div>
+        </div>
+
+        <div class="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border border-white/5">
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1750242129&color=%2306b6d4&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
             </iframe>
-        </div>
-
-        <div class="mt-6 text-zinc-600 text-[10px] uppercase font-bold">
-            <p>> Link Source: SoundCloud/H-ng-ph-c</p>
-            <p class="text-blue-900 mt-2 italic">Dán code này vào là chạy - Không ra nhạc Nga!</p>
         </div>
     </div>
 
