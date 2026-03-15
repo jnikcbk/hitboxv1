@@ -3,111 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blox Fruit Service - Cussa Team</title>
+    <title>Blox Fruit Hub - Dịch Vụ VIP</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #00d2ff; --lava: #ff4e50; --dark: #0a0e14; --card: #151c26; }
-        body { background: var(--dark); color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+        :root { --primary: #00f2ff; --banana: #ffe135; --maru: #ff4e50; --dark: #0d1117; --card: #161b22; }
+        body { background: var(--dark); color: #c9d1d9; font-family: 'Segoe UI', sans-serif; margin: 0; }
         
-        header { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://i.ytimg.com/vi/6X_Y6XnSExo/maxresdefault.jpg'); background-size: cover; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-bottom: 4px solid var(--primary); }
-        header h1 { font-size: 3rem; margin: 0; text-transform: uppercase; letter-spacing: 5px; text-shadow: 0 0 20px var(--primary); }
+        /* Header cực cháy */
+        header { background: linear-gradient(to bottom, rgba(13,17,23,0.8), var(--dark)), url('https://wallpapercave.com/wp/wp11790409.jpg'); background-size: cover; padding: 60px 20px; text-align: center; border-bottom: 1px solid #30363d; }
+        .logo { font-size: 2.5rem; font-weight: 800; color: var(--primary); text-shadow: 0 0 20px rgba(0,242,255,0.5); margin: 0; }
         
-        .container { max-width: 1000px; margin: -50px auto 50px; padding: 0 20px; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        /* Bảng giá dịch vụ */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; margin-top: 30px; }
         
-        .card { background: var(--card); border-radius: 15px; padding: 25px; border: 1px solid #253141; transition: 0.3s; position: relative; overflow: hidden; }
-        .card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0, 210, 255, 0.2); }
-        .card i { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+        .card { background: var(--card); border: 1px solid #30363d; border-radius: 12px; padding: 20px; transition: 0.3s; position: relative; }
+        .card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         
-        .price { font-size: 1.5rem; font-weight: bold; color: var(--primary); margin: 15px 0; }
-        .hot-tag { position: absolute; top: 10px; right: -30px; background: var(--lava); color: white; padding: 5px 40px; transform: rotate(45deg); font-size: 12px; font-weight: bold; }
+        .card h3 { margin: 10px 0; font-size: 1.1rem; color: #fff; }
+        .card p { font-size: 0.85rem; color: #8b949e; line-height: 1.4; }
+        .price-tag { display: inline-block; background: rgba(0,242,255,0.1); color: var(--primary); padding: 5px 12px; border-radius: 20px; font-weight: bold; margin: 10px 0; font-size: 0.9rem; }
+        
+        /* Đặc biệt cho Key */
+        .key-banana { border-left: 4px solid var(--banana); }
+        .key-maru { border-left: 4px solid var(--maru); }
+        
+        .buy-btn { width: 100%; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 10px; }
+        .buy-btn.primary { background: var(--primary); color: #000; }
+        .buy-btn.secondary { background: #30363d; color: #fff; }
+        .buy-btn:hover { opacity: 0.8; }
 
-        .btn-order { background: var(--primary); color: var(--dark); border: none; padding: 12px 20px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
-        .btn-order:hover { background: white; }
-
-        .form-contact { background: var(--card); padding: 40px; border-radius: 15px; margin-top: 40px; text-align: center; }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; background: #0a0e14; border: 1px solid #253141; color: white; border-radius: 5px; }
+        /* Form đặt hàng */
+        .order-box { background: #161b22; border: 1px solid var(--primary); border-radius: 12px; padding: 30px; margin-top: 50px; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 6px; box-sizing: border-box; }
         
-        .footer { text-align: center; padding: 40px; color: #555; font-size: 14px; }
+        .badge { position: absolute; top: 10px; right: 10px; font-size: 10px; background: red; color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>BLOX FRUIT SERVICE</h1>
-        <p style="color: var(--primary)">DỊCH VỤ SĂN BOSS & CÀY THUÊ UY TÍN SỐ 1</p>
-    </header>
+<header>
+    <div class="logo"><i class="fas fa-ship"></i> BLOX FRUIT HUB</div>
+    <p>Dịch vụ Săn Boss - Cày Thuê - Key Script Chất Lượng</p>
+</header>
 
-    <div class="container">
-        <div class="grid">
-            <div class="card">
-                <div class="hot-tag">HOT</div>
-                <i class="fas fa-dragon" style="color: var(--primary);"></i>
-                <h3>SĂN LEVIATHAN</h3>
-                <p>Nhận lấy Tim Leviathan, cày nguyên liệu chế thuyền, phụ kiện VIP.</p>
-                <div class="price">50.000đ - 100.000đ</div>
-                <button class="btn-order" onclick="scrollToContact('Leviathan')">ĐẶT DỊCH VỤ</button>
-            </div>
-
-            <div class="card">
-                <i class="fas fa-volcano" style="color: var(--lava);"></i>
-                <h3>ĐẢO RỒNG (NÚI LỬA)</h3>
-                <p>Tìm đảo bí ẩn, săn Gear Tộc V4, Mirage Island tốc độ cao.</p>
-                <div class="price">30.000đ - 70.000đ</div>
-                <button class="btn-order" onclick="scrollToContact('Đảo Rồng')">ĐẶT DỊCH VỤ</button>
-            </div>
-
-            <div class="card">
-                <i class="fas fa-up-long" style="color: #4ade80;"></i>
-                <h3>CÀY THUÊ MAX LEVEL</h3>
-                <p>Cày cấp từ bất kỳ Level nào lên Max. Đảm bảo an toàn, không tool.</p>
-                <div class="price">2.000đ / 100 Level</div>
-                <button class="btn-order" onclick="scrollToContact('Cày Level')">ĐẶT DỊCH VỤ</button>
-            </div>
+<div class="container">
+    <h2 style="border-left: 4px solid var(--primary); padding-left: 15px;">DỊCH VỤ CÀY THUÊ & SĂN BOSS</h2>
+    <div class="grid">
+        <div class="card">
+            <span class="badge">SCARED</span>
+            <i class="fas fa-water" style="color: var(--primary)"></i>
+            <h3>Săn Leviathan</h3>
+            <p>Lấy Tim Leviathan, nguyên liệu chế thuyền VIP.</p>
+            <div class="price-tag">50.000đ - 70.000đ</div>
+            <button class="buy-btn primary" onclick="selectService('Săn Leviathan')">ĐẶT MUA</button>
+        </div>
+        
+        <div class="card">
+            <i class="fas fa-mountain-sun" style="color: var(--maru)"></i>
+            <h3>Đảo Rồng (Núi Lửa)</h3>
+            <p>Săn Gear Tộc V4, Mirage Island cực nhanh.</p>
+            <div class="price-tag">50.000đ - 70.000đ</div>
+            <button class="buy-btn primary" onclick="selectService('Đảo Rồng')">ĐẶT MUA</button>
         </div>
 
-        <div class="form-contact" id="contact">
-            <h2>GỬI YÊU CẦU DỊCH VỤ</h2>
-            <p style="color: #888">Chúng tôi sẽ liên hệ lại qua Zalo/Facebook ngay lập tức</p>
-            <div style="max-width: 500px; margin: 0 auto;">
-                <input type="text" id="name" placeholder="Tên của bạn hoặc In-game">
-                <select id="service-select">
-                    <option value="Leviathan">Săn Leviathan</option>
-                    <option value="Đảo Rồng">Tìm Đảo Rồng / Núi Lửa</option>
-                    <option value="Cày Level">Cày Thuê Level</option>
-                    <option value="Khác">Dịch vụ khác...</option>
-                </select>
-                <input type="text" id="contact-info" placeholder="Link Facebook hoặc Số Zalo">
-                <button class="btn-order" style="margin-top: 20px; background: var(--lava);" onclick="sendOrder()">GỬI ĐƠN HÀNG</button>
-            </div>
+        <div class="card">
+            <i class="fas fa-bolt" style="color: #ffa500"></i>
+            <h3>Full Tộc V4</h3>
+            <p>Cày gạt cần, làm quest, up max bậc Tộc V4.</p>
+            <div class="price-tag">150.000đ / Tộc</div>
+            <button class="buy-btn primary" onclick="selectService('Tộc V4')">ĐẶT MUA</button>
         </div>
 
-        <div class="footer">
-            &copy; 2026 Blox Fruit Service Team. Powered by Cussa Technology.
+        <div class="card">
+            <i class="fas fa-level-up-alt" style="color: #4ade80"></i>
+            <h3>Cày Thuê Level</h3>
+            <p>Cày từ lv 1 đến Max Level (2550+) an toàn.</p>
+            <div class="price-tag">30.000đ / 500 Level</div>
+            <button class="buy-btn primary" onclick="selectService('Cày Level')">ĐẶT MUA</button>
         </div>
     </div>
 
-    <script>
-        function scrollToContact(service) {
-            document.getElementById('service-select').value = service;
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    <h2 style="border-left: 4px solid var(--banana); padding-left: 15px; margin-top: 50px;">DỊCH VỤ KEY SCRIPT (AUTO)</h2>
+    <div class="grid">
+        <div class="card key-banana">
+            <i class="fas fa-leaf" style="color: var(--banana)"></i>
+            <h3>Key BANANAA</h3>
+            <p>Bản mượt, cực tốt cho săn Sea & Event.</p>
+            <div class="price-tag">100.000đ / Key</div>
+            <button class="buy-btn primary" style="background:var(--banana)" onclick="selectService('Key Bananaa')">MUA KEY</button>
+        </div>
+
+        <div class="card key-maru">
+            <i class="fas fa-fire" style="color: var(--maru)"></i>
+            <h3>Key MARU</h3>
+            <p>Bản chuyên dụng cho Raid & Cày Level siêu tốc.</p>
+            <div class="price-tag">100.000đ / Key</div>
+            <button class="buy-btn primary" style="background:var(--maru)" onclick="selectService('Key Maru')">MUA KEY</button>
+        </div>
+        
+        <div class="card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Gói Combo VIP</h3>
+            <p>Leviathan + Đảo Rồng + Key Maru (Tiết kiệm 20%).</p>
+            <div class="price-tag">150.000đ</div>
+            <button class="buy-btn secondary" onclick="selectService('Combo VIP')">XEM CHI TIẾT</button>
+        </div>
+    </div>
+
+    <div class="order-box" id="order-form">
+        <h2 style="margin-top:0; color:var(--primary)">XÁC NHẬN GIAO DỊCH</h2>
+        <div id="selected-info" style="color:#8b949e; margin-bottom: 20px;">Vui lòng chọn dịch vụ phía trên</div>
+        <input type="text" id="cus-name" placeholder="Tên Zalo hoặc Facebook của bạn">
+        <input type="text" id="cus-acc" placeholder="Tên nhân vật trong Game (nếu cày thuê)">
+        <select id="final-service">
+            <option value="">-- Chọn lại dịch vụ --</option>
+            <option value="Leviathan">Săn Leviathan</option>
+            <option value="Đảo Rồng">Đảo Rồng / Núi Lửa</option>
+            <option value="Tộc V4">Lên Tộc V4</option>
+            <option value="Cày Level">Cày Thuê Level</option>
+            <option value="Key Bananaa">Key BANANAA (100k)</option>
+            <option value="Key Maru">Key MARU (100k)</option>
+        </select>
+        <button class="buy-btn primary" style="padding:15px; font-size:1.1rem" onclick="submitOrder()">GỬI YÊU CẦU CHO ADMIN</button>
+    </div>
+</div>
+
+<script>
+    function selectService(name) {
+        document.getElementById('final-service').value = name;
+        document.getElementById('selected-info').innerText = "Bạn đã chọn: " + name;
+        document.getElementById('order-form').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function submitOrder() {
+        const name = document.getElementById('cus-name').value;
+        const service = document.getElementById('final-service').value;
+        
+        if(!name || !service) {
+            alert("Vui lòng điền đủ tên và chọn dịch vụ!");
+            return;
         }
 
-        function sendOrder() {
-            const name = document.getElementById('name').value;
-            const service = document.getElementById('service-select').value;
-            const contact = document.getElementById('contact-info').value;
+        alert("Đơn hàng: " + service + "\nKhách hàng: " + name + "\n\nTụi mình đã nhận đơn! Check Zalo/FB để admin tư vấn thanh toán nhé.");
+        window.location.reload();
+    }
+</script>
 
-            if(!name || !contact) {
-                alert("Vui lòng nhập đầy đủ thông tin để tụi mình liên hệ nha!");
-                return;
-            }
-
-            // Giả lập gửi đơn hàng
-            alert(`Chào ${name}!\nĐơn hàng "${service}" đã được gửi đi. Tụi mình sẽ liên hệ bạn qua ${contact} sớm nhất!`);
-            location.reload();
-        }
-    </script>
 </body>
 </html>
