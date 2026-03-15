@@ -3,117 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Biometric Analyzer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>Cussa Cyber Terminal</title>
     <style>
-        :root { --neon: #00f2ff; --bg: #050505; --accent: #ff0077; }
-        body { background: var(--bg); color: white; font-family: 'Orbitron', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; overflow-x: hidden; }
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-        .container { text-align: center; width: 100%; max-width: 400px; padding: 20px; }
-        
-        /* Form nhập tên */
-        #input-section { margin-bottom: 20px; transition: 0.5s; }
-        input { background: #111; border: 1px solid var(--neon); color: var(--neon); padding: 12px; border-radius: 5px; text-align: center; outline: none; font-family: 'Orbitron'; margin-bottom: 10px; width: 80%; }
+        :root { --neon: #00ff41; --bg: #000800; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Share Tech Mono', monospace; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
 
-        /* Vùng quét */
-        .scanner-box { position: relative; width: 200px; height: 280px; border: 2px solid rgba(0, 242, 255, 0.2); border-radius: 15px; margin: 0 auto; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(0,242,255,0.05) 0%, transparent 80%); cursor: pointer; display: none; }
-        .active .laser { display: block; animation: scan 2s infinite ease-in-out; }
-        .laser { position: absolute; width: 100%; height: 2px; background: var(--neon); top: 0; box-shadow: 0 0 15px var(--neon); display: none; }
+        .terminal { border: 1px solid var(--neon); padding: 40px; background: rgba(0, 20, 0, 0.9); box-shadow: 0 0 20px rgba(0, 255, 65, 0.2); position: relative; }
+        .terminal::before { content: "SYSTEM_MONITOR_V2.0"; position: absolute; top: -10px; left: 20px; background: var(--bg); padding: 0 10px; font-size: 12px; }
 
-        @keyframes scan { 0%, 100% { top: 0%; } 50% { top: 100%; } }
+        .time { font-size: 6rem; text-shadow: 0 0 15px var(--neon); margin-bottom: 20px; }
+        .date { font-size: 1.5rem; opacity: 0.7; border-bottom: 1px solid var(--neon); padding-bottom: 10px; margin-bottom: 20px; }
 
-        #res-box { margin-top: 30px; min-height: 100px; }
-        .name-label { color: var(--neon); font-size: 1.2rem; margin-bottom: 5px; }
-        .result-val { font-size: 2rem; font-weight: bold; text-shadow: 0 0 20px currentColor; }
-        
-        button#start-btn { background: var(--neon); color: black; border: none; padding: 10px 25px; border-radius: 5px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; }
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 14px; }
+        .stat-item { display: flex; justify-content: space-between; }
+        .loading-bar { width: 100px; height: 10px; border: 1px solid var(--neon); position: relative; }
+        .progress { height: 100%; background: var(--neon); width: 0%; transition: width 0.5s; }
+
+        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: rgba(0, 255, 65, 0.1); animation: scan 4s linear infinite; pointer-events: none; }
+        @keyframes scan { from { top: 0; } to { top: 100%; } }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2 style="color: var(--neon); letter-spacing: 5px; margin-bottom: 30px;">AI IDENTIFIER</h2>
+    <div class="scan-line"></div>
 
-        <div id="input-section">
-            <p style="font-size: 10px; color: #555;">NHẬP DANH TÍNH ĐỂ KHỞI TẠO AI</p>
-            <input type="text" id="username" placeholder="TÊN CỦA BẠN..." autocomplete="off">
-            <br>
-            <button id="start-btn" onclick="initScanner()">XÁC NHẬN</button>
-        </div>
-
-        <div id="msg" style="display: none; margin-bottom: 20px; color: #888;">NHẤN GIỮ VÀO MÀN HÌNH</div>
-        <div class="scanner-box" id="box" onmousedown="startScan()" onmouseup="stopScan()" ontouchstart="startScan()" ontouchend="stopScan()">
-            <div class="laser"></div>
-            <div style="font-size: 60px; opacity: 0.3;">🆔</div>
-        </div>
-
-        <div id="res-box">
-            <div id="res-name" class="name-label"></div>
-            <div id="res-val" class="result-val"></div>
-            <button id="retry-btn" style="display:none; margin-top:20px; background:transparent; color:#555; border:1px solid #333; padding:5px 10px; cursor:pointer;" onclick="location.reload()">THỬ LẠI</button>
+    <div class="terminal">
+        <div class="date" id="date">INITIATING...</div>
+        <div class="time" id="time">00:00:00</div>
+        
+        <div class="stats">
+            <div class="stat-item"><span>CPU_LOAD:</span> <div class="loading-bar"><div class="progress" id="cpu"></div></div></div>
+            <div class="stat-item"><span>MEMORY:</span> <div class="loading-bar"><div class="progress" id="ram"></div></div></div>
+            <div class="stat-item"><span>IP_ADDR:</span> <span id="ip">192.168.1.XXX</span></div>
+            <div class="stat-item"><span>STATUS:</span> <span style="animation: blink 1s infinite">ONLINE</span></div>
         </div>
     </div>
 
     <script>
-        let timer;
-        const inputSection = document.getElementById('input-section');
-        const scannerBox = document.getElementById('box');
-        const msg = document.getElementById('msg');
-        const resName = document.getElementById('res-name');
-        const resVal = document.getElementById('res-val');
-        const usernameInput = document.getElementById('username');
-
-        const statusData = [
-            { text: "THẲNG 100%", color: "#00f2ff" },
-            { text: "GAY CHÍNH HIỆU", color: "#ff0077" },
-            { text: "BÊ ĐÊ QUỐC TẾ", color: "#ff0077" },
-            { text: "CHUẨN MEN", color: "#00f2ff" },
-            { text: "GAY NGẦM", color: "#ff0077" },
-            { text: "ĐẸP TRAI KHOAI TO", color: "#00f2ff" }
-        ];
-
-        function initScanner() {
-            if (usernameInput.value.trim() === "") return alert("Vui lòng nhập tên!");
-            inputSection.style.display = 'none';
-            scannerBox.style.display = 'flex';
-            msg.style.display = 'block';
-        }
-
-        function startScan() {
-            resName.innerText = "";
-            resVal.innerText = "";
-            msg.innerText = "ĐANG PHÂN TÍCH SINH TRẮC...";
-            msg.style.color = "var(--neon)";
-            scannerBox.classList.add('active');
-
-            timer = setTimeout(() => {
-                showResult();
-            }, 3000);
-        }
-
-        function stopScan() {
-            if (scannerBox.classList.contains('active')) {
-                clearTimeout(timer);
-                scannerBox.classList.remove('active');
-                msg.innerText = "QUÉT THẤT BẠI! HÃY GIỮ CHẶT";
-                msg.style.color = "#ff4444";
-            }
-        }
-
-        function showResult() {
-            scannerBox.classList.remove('active');
-            scannerBox.style.display = 'none';
-            msg.style.display = 'none';
+        function update() {
+            const now = new Date();
             
-            const name = usernameInput.value.toUpperCase();
-            const result = statusData[Math.floor(Math.random() * statusData.length)];
-            
-            resName.innerText = "ĐỐI TƯỢNG: " + name;
-            resVal.innerText = result.text;
-            resVal.style.color = result.color;
-            
-            document.getElementById('retry-btn').style.display = 'inline-block';
+            // Cập nhật giờ
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('time').innerText = `${h}:${m}:${s}`;
+
+            // Cập nhật ngày
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('date').innerText = now.toLocaleDateString('vi-VN', options).toUpperCase();
+
+            // Giả lập thanh chạy
+            document.getElementById('cpu').style.width = Math.random() * 100 + "%";
+            document.getElementById('ram').style.width = Math.random() * 100 + "%";
         }
+
+        // Tạo hiệu ứng chớp tắt cho chữ Online
+        const style = document.createElement('style');
+        style.innerHTML = "@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }";
+        document.head.appendChild(style);
+
+        setInterval(update, 1000);
+        update();
     </script>
 </body>
 </html>
