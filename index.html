@@ -3,129 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cussa Brain Master</title>
+    <title>Cussa Neon Toy</title>
     <style>
-        :root { --primary: #00d2ff; --bg: #0f172a; --card: #1e293b; --success: #10b981; --error: #ef4444; }
-        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        
-        .container { background: var(--card); padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 350px; text-align: center; border: 1px solid #334155; }
-        h1 { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; }
-        
-        .stats { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; font-size: 0.9rem; color: #94a3b8; }
-        
-        #question { font-size: 3rem; font-weight: 800; margin: 20px 0; letter-spacing: 2px; }
-        
-        input { width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #334155; background: #0f172a; color: white; font-size: 1.5rem; text-align: center; outline: none; box-sizing: border-box; transition: 0.3s; }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 210, 255, 0.3); }
-        
-        .progress-bar { height: 6px; background: #334155; border-radius: 3px; margin-top: 25px; overflow: hidden; }
-        #progress { height: 100%; background: var(--primary); width: 100%; transition: linear; }
-
-        .game-over { display: none; }
-        button { background: var(--primary); color: #0f172a; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            display: block;
+        }
+        #ui {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: rgba(0, 255, 136, 0.5);
+            font-family: 'Segoe UI', sans-serif;
+            pointer-events: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container" id="game-container">
-        <div class="stats">
-            <span>SCORE: <span id="score">0</span></span>
-            <span>HIGH: <span id="high-score">0</span></span>
-        </div>
-        
-        <h1>BRAIN MASTER</h1>
-        
-        <div id="game-ui">
-            <div id="question">12 + 8</div>
-            <input type="number" id="answer" placeholder="?" autofocus autocomplete="off">
-            <div class="progress-bar">
-                <div id="progress"></div>
-            </div>
-        </div>
-
-        <div id="result-ui" class="game-over">
-            <h2 style="color: var(--error);">GAME OVER</h2>
-            <p id="final-stats"></p>
-            <button onclick="startGame()">THỬ LẠI</button>
-        </div>
-    </div>
+    <div id="ui">Di chuột hoặc chạm để tạo lụa Neon - cussa.vercel.app</div>
+    <canvas id="canvas"></canvas>
 
     <script>
-        let score = 0;
-        let timeLeft = 100;
-        let timerId;
-        let correctAnswer;
-        let highScore = localStorage.getItem('cussa_high_score') || 0;
-        
-        document.getElementById('high-score').innerText = highScore;
-        const answerInput = document.getElementById('answer');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
 
-        function generateQuestion() {
-            const operators = ['+', '-', '*'];
-            const op = operators[Math.floor(Math.random() * operators.length)];
-            let n1, n2;
+        let width, height;
+        let particles = [];
+        const mouse = { x: undefined, y: undefined };
 
-            if (op === '*') {
-                n1 = Math.floor(Math.random() * 12) + 2;
-                n2 = Math.floor(Math.random() * 12) + 2;
-            } else {
-                n1 = Math.floor(Math.random() * 50) + 1;
-                n2 = Math.floor(Math.random() * 50) + 1;
-            }
+        // Cấu hình
+        const particleCount = 100;
+        const colorHue = 160; // Màu xanh Neon (thay đổi số này để đổi màu)
 
-            document.getElementById('question').innerText = `${n1} ${op} ${n2}`;
-            correctAnswer = eval(`${n1} ${op} ${n2}`);
+        function init() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
         }
 
-        function startGame() {
-            score = 0;
-            timeLeft = 100;
-            document.getElementById('score').innerText = score;
-            document.getElementById('game-ui').style.display = 'block';
-            document.getElementById('result-ui').style.display = 'none';
-            answerInput.value = '';
-            answerInput.focus();
-            generateQuestion();
-            resetTimer();
-        }
-
-        function resetTimer() {
-            clearInterval(timerId);
-            timeLeft = 100;
-            timerId = setInterval(() => {
-                timeLeft -= 1.5; // Tốc độ giảm thanh thời gian
-                document.getElementById('progress').style.width = timeLeft + '%';
-                if (timeLeft <= 0) endGame();
-            }, 100);
-        }
-
-        function endGame() {
-            clearInterval(timerId);
-            document.getElementById('game-ui').style.display = 'none';
-            document.getElementById('result-ui').style.display = 'block';
-            
-            if (score > highScore) {
-                highScore = score;
-                localStorage.setItem('cussa_high_score', highScore);
-                document.getElementById('high-score').innerText = highScore;
-            }
-
-            // Công thức tính độ nhạy não bộ: A = accuracy
-            const accuracy = score > 0 ? Math.round((score / (score + 1)) * 100) : 0;
-            document.getElementById('final-stats').innerHTML = `Điểm của bạn: ${score}<br>Độ nhạy não bộ: $S = ${accuracy}\\%$`;
-        }
-
-        answerInput.addEventListener('input', () => {
-            if (parseInt(answerInput.value) === correctAnswer) {
-                score++;
-                document.getElementById('score').innerText = score;
-                answerInput.value = '';
-                generateQuestion();
-                resetTimer(); // Reset thời gian khi trả lời đúng
+        window.addEventListener('resize', init);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+            for (let i = 0; i < 3; i++) {
+                particles.push(new Particle());
             }
         });
 
-        startGame();
+        window.addEventListener('touchmove', (e) => {
+            mouse.x = e.touches[0].clientX;
+            mouse.y = e.touches[0].clientY;
+            for (let i = 0; i < 3; i++) {
+                particles.push(new Particle());
+            }
+        });
+
+        class Particle {
+            constructor() {
+                this.x = mouse.x;
+                this.y = mouse.y;
+                this.size = Math.random() * 5 + 1;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+                this.color = `hsl(${Math.random() * 60 + colorHue}, 100%, 50%)`;
+                this.life = 100;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.1) this.size -= 0.05;
+                this.life -= 1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function animate() {
+            // Hiệu ứng bóng ma (trail) bằng cách phủ lớp đen mờ
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, width, height);
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                // Kết nối các hạt bằng đường kẻ nếu chúng gần nhau
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 50) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = particles[i].color;
+                        ctx.lineWidth = 0.2;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                        ctx.closePath();
+                    }
+                }
+
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
     </script>
 </body>
 </html>
