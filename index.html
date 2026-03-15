@@ -3,179 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blox Fruit VIP - Cussa Store</title>
+    <title>Blox Fruit - VIP Private Server</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --main: #00f2ff;
-            --sub: #7000ff;
-            --bg: #0a0a0a;
-            --card: #151515;
+            --cyan: #00f2ff;
+            --purple: #b026ff;
+            --pink: #ff007f;
+            --bg-dark: #07070a;
+            --card-glass: rgba(20, 20, 25, 0.6);
         }
 
+        * { box-sizing: border-box; }
+
         body {
-            background-color: var(--bg);
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at top right, rgba(176, 38, 255, 0.15), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(0, 242, 255, 0.15), transparent 40%);
             color: #fff;
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* Thanh Menu */
+        /* Thanh Menu Kính Mờ */
         nav {
-            background: rgba(0, 0, 0, 0.9);
-            height: 70px;
+            background: rgba(7, 7, 10, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            height: 75px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 10%;
-            border-bottom: 1px solid #222;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        .logo { font-size: 1.6rem; font-weight: 900; color: var(--main); text-shadow: 0 0 10px rgba(0,242,255,0.5); }
+        .logo { 
+            font-size: 1.8rem; 
+            font-weight: 900; 
+            background: linear-gradient(to right, var(--cyan), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-        .nav-links a { color: #ccc; text-decoration: none; margin-left: 25px; font-size: 13px; font-weight: 700; transition: 0.3s; }
-        .nav-links a:hover { color: var(--main); }
+        .nav-links a { 
+            color: #aaa; text-decoration: none; margin-left: 35px; 
+            font-size: 13px; font-weight: 600; transition: 0.3s; 
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .nav-links a:hover { color: #fff; text-shadow: 0 0 10px var(--cyan); }
+        .nav-links a.active { color: var(--cyan); }
 
-        /* Banner chính */
+        /* Banner Chính Hiệu Ứng Float */
         .hero {
-            height: 350px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), var(--bg)), url('https://wallpapercave.com/wp/wp11790409.jpg') center/cover;
+            height: 400px;
+            background: linear-gradient(to bottom, rgba(7,7,10,0.2), var(--bg-dark)), 
+                        url('https://wallpapercave.com/wp/wp11790409.jpg') center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-        }
-
-        .hero h1 { font-size: 3rem; margin: 0; text-transform: uppercase; background: linear-gradient(to right, #fff, var(--main)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        .container { max-width: 1100px; margin: -50px auto 50px; padding: 0 20px; }
-
-        /* Phần Thông Báo Chạy Chữ */
-        .marquee-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #222;
-            padding: 10px;
-            border-radius: 50px;
-            margin-bottom: 30px;
-            color: var(--main);
-            font-size: 14px;
-        }
-
-        /* Danh sách dịch vụ */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-
-        .card {
-            background: var(--card);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #222;
-            transition: 0.3s;
             position: relative;
         }
 
-        .card:hover { border-color: var(--main); transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0, 242, 255, 0.1); }
-
-        .card img { width: 100%; height: 160px; object-fit: cover; transition: 0.4s; }
-        .card:hover img { transform: scale(1.05); }
-
-        .card-info { padding: 15px; }
-        .card-title { font-size: 14px; font-weight: 700; height: 40px; margin-bottom: 10px; }
-        .price { color: var(--main); font-size: 1.3rem; font-weight: 900; margin-bottom: 15px; }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 12px 0;
-            background: linear-gradient(to right, var(--main), var(--sub));
-            color: #000;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: 12px;
+        .hero h1 { 
+            font-size: 3.5rem; margin: 0; text-transform: uppercase; 
+            color: #fff;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.8);
+            animation: float 3s ease-in-out infinite;
         }
 
-        /* --- THÔNG BÁO NỔI (TOAST) --- */
-        #toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 9999; }
-        .toast {
-            background: rgba(20, 20, 20, 0.95);
-            border-left: 5px solid var(--main);
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        .hero p {
+            font-size: 1.2rem; font-weight: 600; color: var(--cyan);
+            letter-spacing: 5px; margin-top: 10px;
+            background: rgba(0, 0, 0, 0.5); padding: 5px 20px; border-radius: 50px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .container { max-width: 1200px; margin: -40px auto 50px; padding: 0 20px; position: relative; z-index: 10; }
+
+        /* Marquee Xịn Xò */
+        .marquee-box {
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.1), transparent);
+            border-top: 1px solid rgba(0, 242, 255, 0.3);
+            border-bottom: 1px solid rgba(0, 242, 255, 0.3);
+            padding: 12px;
+            margin-bottom: 40px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex; align-items: center;
+        }
+        .marquee-box i { color: var(--cyan); margin-right: 10px; font-size: 18px; }
+
+        /* Danh Sách Card Đẹp Mắt */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 25px; }
+
+        .card {
+            background: var(--card-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            animation: slideIn 0.5s ease forwards, fadeOut 0.5s ease 4s forwards;
-            font-size: 13px;
-            min-width: 250px;
+            display: flex; flex-direction: column;
         }
-        @keyframes slideIn { from { transform: translateX(-110%); } to { transform: translateX(0); } }
-        @keyframes fadeOut { to { opacity: 0; transform: translateX(-20px); } }
-        .toast i { color: var(--main); font-size: 20px; }
+
+        .card:hover { 
+            border-color: rgba(0, 242, 255, 0.5); 
+            transform: translateY(-12px); 
+            box-shadow: 0 15px 35px rgba(0, 242, 255, 0.15); 
+        }
+
+        .card-img-wrap { overflow: hidden; position: relative; }
+        .card-img-wrap img { width: 100%; height: 170px; object-fit: cover; transition: 0.5s; }
+        .card:hover .card-img-wrap img { transform: scale(1.1) rotate(1deg); filter: brightness(1.2); }
+
+        /* Tag VIP */
+        .badge {
+            position: absolute; top: 10px; right: 10px;
+            background: linear-gradient(45deg, var(--cyan), var(--purple));
+            color: white; padding: 5px 12px; border-radius: 8px;
+            font-size: 11px; font-weight: 800; box-shadow: 0 0 10px rgba(0,242,255,0.5);
+        }
+
+        .card-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-title { font-size: 15px; font-weight: 800; line-height: 1.4; margin-bottom: 10px; color: #f0f0f0; }
+        .status { color: #00ff88; font-size: 1rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .status i { font-size: 12px; }
+
+        /* Nút bấm Shiny (Sửa thành nút JOIN) */
+        .btn {
+            display: block; width: 100%; padding: 14px 0;
+            background: linear-gradient(90deg, #00f2ff, #b026ff, #00f2ff);
+            background-size: 200% auto;
+            color: #fff; text-align: center; text-decoration: none;
+            border-radius: 10px; font-weight: 900; text-transform: uppercase; font-size: 14px;
+            transition: 0.5s; position: relative; overflow: hidden; border: none; cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+        }
+        
+        .btn:hover { background-position: right center; box-shadow: 0 0 25px rgba(176, 38, 255, 0.6); color: #fff; transform: scale(1.02); }
+
+        /* Hiệu ứng lướt sáng trên nút */
+        .btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg); animation: shine 2.5s infinite;
+        }
+        @keyframes shine { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+
+        /* --- THÔNG BÁO NỔI (VIP TOAST) --- */
+        #toast-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 15px; }
+        
+        .toast {
+            background: rgba(15, 15, 20, 0.85);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #00ff88; /* Màu xanh lá báo hiệu online */
+            padding: 16px 20px; border-radius: 12px;
+            display: flex; align-items: center; gap: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            animation: slideBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards, fadeOut 0.5s ease 4s forwards;
+            min-width: 280px; position: relative; overflow: hidden;
+        }
+        
+        @keyframes slideBounce { from { transform: translateX(-120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { to { opacity: 0; transform: translateX(-30px); } }
+        
+        .toast-icon { 
+            background: rgba(0, 255, 136, 0.1); width: 40px; height: 40px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            color: #00ff88; font-size: 18px; flex-shrink: 0;
+        }
+        
+        .toast-content { line-height: 1.4; z-index: 2; }
+        .toast-name { color: var(--cyan); font-weight: 800; font-size: 14px; }
+        .toast-text { color: #ccc; font-size: 12px; font-weight: 600; }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo">BF STORE</div>
+    <div class="logo"><i class="fas fa-server" style="margin-right: 8px;"></i>KaizenMC Hub</div>
     <div class="nav-links">
-        <a href="#">TRANG CHỦ</a>
-        <a href="#">DỊCH VỤ</a>
-        <a href="#">MUA ACC</a>
-        <a href="#" style="color: var(--main)">NẠP THẺ</a>
+        <a href="#" class="active">Trang Chủ</a>
+        <a href="#">Lịch Farm</a>
+        <a href="#">Discord</a>
+        <a href="https://www.roblox.com/share?code=b03f28d858c1c843a53f476467fa3627&type=Server" target="_blank" style="background: var(--cyan); color: #000; padding: 8px 20px; border-radius: 20px; font-weight: 900;">JOIN NGAY</a>
     </div>
 </nav>
 
 <div class="hero">
-    <h1>SERVICES PREMIUM</h1>
-    <p style="letter-spacing: 3px;">UY TÍN TẠO NÊN THƯƠNG HIỆU</p>
+    <h1>PRIVATE SERVER</h1>
+    <p>CỘNG ĐỒNG BLOX FRUIT ĐỈNH NHẤT</p>
 </div>
 
 <div class="container">
     <div class="marquee-box">
-        <marquee>Chào mừng bạn đến với Shop cày thuê Blox Fruit - Hệ thống săn Leviathan, Tộc V4 nhanh nhất VN!</marquee>
+        <i class="fas fa-broadcast-tower"></i>
+        <marquee scrollamount="8">🔥 Server VIP đang mở! Anh em join ngay để cùng pt đi săn Leviathan, up Tộc V4 và farm Sea Event nhé. Không PK bừa bãi, hỗ trợ newbie tận tình! 🔥</marquee>
     </div>
 
     <div class="grid">
         <div class="card">
-            <img src="https://i.ytimg.com/vi/6X_Y6XnSExo/maxresdefault.jpg">
+            <div class="card-img-wrap">
+                <div class="badge">BIỂN 3</div>
+                <img src="https://i.ytimg.com/vi/6X_Y6XnSExo/maxresdefault.jpg">
+            </div>
             <div class="card-info">
-                <div class="card-title">SĂN LEVIATHAN LẤY TIM (100% THÀNH CÔNG)</div>
-                <div class="price">100.000đ</div>
-                <a href="#" class="btn">THUÊ NGAY</a>
+                <div class="card-title">TỔ ĐỘI SĂN LEVIATHAN</div>
+                <div class="status"><i class="fas fa-circle"></i> Đang tìm PT (4/5)</div>
+                <a href="https://www.roblox.com/share?code=b03f28d858c1c843a53f476467fa3627&type=Server" target="_blank" class="btn">Tham Gia Ngay <i class="fas fa-play" style="margin-left: 5px;"></i></a>
             </div>
         </div>
         <div class="card">
-            <img src="https://i.ytimg.com/vi/R-Sno4MREqM/maxresdefault.jpg">
+            <div class="card-img-wrap">
+                <img src="https://i.ytimg.com/vi/R-Sno4MREqM/maxresdefault.jpg">
+            </div>
             <div class="card-info">
-                <div class="card-title">CÀY FULL TỘC V4 - GẠT CẦN + UP BẬC</div>
-                <div class="price">150.000đ</div>
-                <a href="#" class="btn">THUÊ NGAY</a>
+                <div class="card-title">KHU VỰC THỨC TỈNH TỘC V4</div>
+                <div class="status"><i class="fas fa-circle"></i> Full Moon sắp tới</div>
+                <a href="https://www.roblox.com/share?code=b03f28d858c1c843a53f476467fa3627&type=Server" target="_blank" class="btn">Tham Gia Ngay <i class="fas fa-play" style="margin-left: 5px;"></i></a>
             </div>
         </div>
         <div class="card">
-            <img src="https://i.ytimg.com/vi/F2i9YfJtVog/maxresdefault.jpg">
+            <div class="card-img-wrap">
+                <div class="badge" style="background: linear-gradient(45deg, #00ff88, #00bcd4);">FARMING</div>
+                <img src="https://i.ytimg.com/vi/F2i9YfJtVog/maxresdefault.jpg">
+            </div>
             <div class="card-info">
-                <div class="card-title">KEY MARU / BANANAA - AUTO EVENT</div>
-                <div class="price">100.000đ</div>
-                <a href="#" class="btn">THUÊ NGAY</a>
+                <div class="card-title">CÀY LEVEL & AUTO EVENT</div>
+                <div class="status"><i class="fas fa-circle"></i> Sever an toàn, no PvP</div>
+                <a href="https://www.roblox.com/share?code=b03f28d858c1c843a53f476467fa3627&type=Server" target="_blank" class="btn">Tham Gia Ngay <i class="fas fa-play" style="margin-left: 5px;"></i></a>
             </div>
         </div>
         <div class="card">
-            <img src="https://i.ytimg.com/vi/pY_jS_H6k0c/maxresdefault.jpg">
+            <div class="card-img-wrap">
+                <img src="https://i.ytimg.com/vi/pY_jS_H6k0c/maxresdefault.jpg">
+            </div>
             <div class="card-info">
-                <div class="card-title">CÀY MAX LEVEL 2550 (TRONG 24H)</div>
-                <div class="price">50.000đ</div>
-                <a href="#" class="btn">THUÊ NGAY</a>
+                <div class="card-title">SĂN LEVI & ĐẢO NÚI LỬA</div>
+                <div class="status"><i class="fas fa-circle"></i> Đang hoạt động sôi nổi</div>
+                <a href="https://www.roblox.com/share?code=b03f28d858c1c843a53f476467fa3627&type=Server" target="_blank" class="btn">Tham Gia Ngay <i class="fas fa-play" style="margin-left: 5px;"></i></a>
             </div>
         </div>
     </div>
@@ -184,9 +270,9 @@
 <div id="toast-container"></div>
 
 <script>
-    // Giả lập thông báo người mua
-    const khach = ["Quốc Bảo", "Minh Hùng", "Thanh Tâm", "Hoàng Nam", "Tuấn Anh"];
-    const dv = ["Săn Leviathan", "Cày Tộc V4", "Mua Key Maru", "Mua Acc Max Lv"];
+    // Đổi thông báo sang phong cách người chơi join server
+    const khach = ["Đăng Mạnh", "Minh Mèo", "Tuấn Khang", "Bảo Long", "Văn Hùng", "Tiến Phát", "NoobMaster69"];
+    const dv = ["Vừa tham gia Server!", "Đang online ở Biển 3", "Vừa Roll ra trái Kitsune", "Đang thức tỉnh tộc V4", "Đang set up thuyền đi săn Leviathan"];
 
     function showToast() {
         const container = document.getElementById('toast-container');
@@ -196,20 +282,26 @@
         const toast = document.createElement('div');
         toast.className = 'toast';
         toast.innerHTML = `
-            <i class="fas fa-check-circle"></i>
-            <div>
-                <b style="color:var(--main)">${name}</b> vừa thanh toán thành công<br>
-                <small>${service}</small>
+            <div class="toast-icon"><i class="fas fa-wifi"></i></div>
+            <div class="toast-content">
+                <div class="toast-name">${name}</div>
+                <div class="toast-text">${service}</div>
             </div>
         `;
         container.appendChild(toast);
+        
         setTimeout(() => { toast.remove(); }, 4500);
     }
 
-    // Mỗi 8 giây hiện 1 thông báo
-    setInterval(showToast, 8000);
-    setTimeout(showToast, 2000); // Hiện cái đầu sau 2s
+    // Thời gian random cho giống người thật (từ 4s đến 10s)
+    function randomToast() {
+        showToast();
+        const nextTime = Math.floor(Math.random() * 6000) + 4000;
+        setTimeout(randomToast, nextTime);
+    }
+
+    setTimeout(randomToast, 1500);
 </script>
 
-</body>
+</body> 
 </html>
