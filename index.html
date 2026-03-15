@@ -3,70 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cussa Cyber Terminal</title>
+    <title>Blox Fruit Service - Cussa Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        :root { --primary: #00d2ff; --lava: #ff4e50; --dark: #0a0e14; --card: #151c26; }
+        body { background: var(--dark); color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+        
+        header { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://i.ytimg.com/vi/6X_Y6XnSExo/maxresdefault.jpg'); background-size: cover; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-bottom: 4px solid var(--primary); }
+        header h1 { font-size: 3rem; margin: 0; text-transform: uppercase; letter-spacing: 5px; text-shadow: 0 0 20px var(--primary); }
+        
+        .container { max-width: 1000px; margin: -50px auto 50px; padding: 0 20px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        
+        .card { background: var(--card); border-radius: 15px; padding: 25px; border: 1px solid #253141; transition: 0.3s; position: relative; overflow: hidden; }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0, 210, 255, 0.2); }
+        .card i { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+        
+        .price { font-size: 1.5rem; font-weight: bold; color: var(--primary); margin: 15px 0; }
+        .hot-tag { position: absolute; top: 10px; right: -30px; background: var(--lava); color: white; padding: 5px 40px; transform: rotate(45deg); font-size: 12px; font-weight: bold; }
 
-        :root { --neon: #00ff41; --bg: #000800; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Share Tech Mono', monospace; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
+        .btn-order { background: var(--primary); color: var(--dark); border: none; padding: 12px 20px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        .btn-order:hover { background: white; }
 
-        .terminal { border: 1px solid var(--neon); padding: 40px; background: rgba(0, 20, 0, 0.9); box-shadow: 0 0 20px rgba(0, 255, 65, 0.2); position: relative; }
-        .terminal::before { content: "SYSTEM_MONITOR_V2.0"; position: absolute; top: -10px; left: 20px; background: var(--bg); padding: 0 10px; font-size: 12px; }
-
-        .time { font-size: 6rem; text-shadow: 0 0 15px var(--neon); margin-bottom: 20px; }
-        .date { font-size: 1.5rem; opacity: 0.7; border-bottom: 1px solid var(--neon); padding-bottom: 10px; margin-bottom: 20px; }
-
-        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 14px; }
-        .stat-item { display: flex; justify-content: space-between; }
-        .loading-bar { width: 100px; height: 10px; border: 1px solid var(--neon); position: relative; }
-        .progress { height: 100%; background: var(--neon); width: 0%; transition: width 0.5s; }
-
-        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: rgba(0, 255, 65, 0.1); animation: scan 4s linear infinite; pointer-events: none; }
-        @keyframes scan { from { top: 0; } to { top: 100%; } }
+        .form-contact { background: var(--card); padding: 40px; border-radius: 15px; margin-top: 40px; text-align: center; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; background: #0a0e14; border: 1px solid #253141; color: white; border-radius: 5px; }
+        
+        .footer { text-align: center; padding: 40px; color: #555; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <div class="scan-line"></div>
+    <header>
+        <h1>BLOX FRUIT SERVICE</h1>
+        <p style="color: var(--primary)">DỊCH VỤ SĂN BOSS & CÀY THUÊ UY TÍN SỐ 1</p>
+    </header>
 
-    <div class="terminal">
-        <div class="date" id="date">INITIATING...</div>
-        <div class="time" id="time">00:00:00</div>
-        
-        <div class="stats">
-            <div class="stat-item"><span>CPU_LOAD:</span> <div class="loading-bar"><div class="progress" id="cpu"></div></div></div>
-            <div class="stat-item"><span>MEMORY:</span> <div class="loading-bar"><div class="progress" id="ram"></div></div></div>
-            <div class="stat-item"><span>IP_ADDR:</span> <span id="ip">192.168.1.XXX</span></div>
-            <div class="stat-item"><span>STATUS:</span> <span style="animation: blink 1s infinite">ONLINE</span></div>
+    <div class="container">
+        <div class="grid">
+            <div class="card">
+                <div class="hot-tag">HOT</div>
+                <i class="fas fa-dragon" style="color: var(--primary);"></i>
+                <h3>SĂN LEVIATHAN</h3>
+                <p>Nhận lấy Tim Leviathan, cày nguyên liệu chế thuyền, phụ kiện VIP.</p>
+                <div class="price">50.000đ - 100.000đ</div>
+                <button class="btn-order" onclick="scrollToContact('Leviathan')">ĐẶT DỊCH VỤ</button>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-volcano" style="color: var(--lava);"></i>
+                <h3>ĐẢO RỒNG (NÚI LỬA)</h3>
+                <p>Tìm đảo bí ẩn, săn Gear Tộc V4, Mirage Island tốc độ cao.</p>
+                <div class="price">30.000đ - 70.000đ</div>
+                <button class="btn-order" onclick="scrollToContact('Đảo Rồng')">ĐẶT DỊCH VỤ</button>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-up-long" style="color: #4ade80;"></i>
+                <h3>CÀY THUÊ MAX LEVEL</h3>
+                <p>Cày cấp từ bất kỳ Level nào lên Max. Đảm bảo an toàn, không tool.</p>
+                <div class="price">2.000đ / 100 Level</div>
+                <button class="btn-order" onclick="scrollToContact('Cày Level')">ĐẶT DỊCH VỤ</button>
+            </div>
+        </div>
+
+        <div class="form-contact" id="contact">
+            <h2>GỬI YÊU CẦU DỊCH VỤ</h2>
+            <p style="color: #888">Chúng tôi sẽ liên hệ lại qua Zalo/Facebook ngay lập tức</p>
+            <div style="max-width: 500px; margin: 0 auto;">
+                <input type="text" id="name" placeholder="Tên của bạn hoặc In-game">
+                <select id="service-select">
+                    <option value="Leviathan">Săn Leviathan</option>
+                    <option value="Đảo Rồng">Tìm Đảo Rồng / Núi Lửa</option>
+                    <option value="Cày Level">Cày Thuê Level</option>
+                    <option value="Khác">Dịch vụ khác...</option>
+                </select>
+                <input type="text" id="contact-info" placeholder="Link Facebook hoặc Số Zalo">
+                <button class="btn-order" style="margin-top: 20px; background: var(--lava);" onclick="sendOrder()">GỬI ĐƠN HÀNG</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Blox Fruit Service Team. Powered by Cussa Technology.
         </div>
     </div>
 
     <script>
-        function update() {
-            const now = new Date();
-            
-            // Cập nhật giờ
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
-            const s = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('time').innerText = `${h}:${m}:${s}`;
-
-            // Cập nhật ngày
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('date').innerText = now.toLocaleDateString('vi-VN', options).toUpperCase();
-
-            // Giả lập thanh chạy
-            document.getElementById('cpu').style.width = Math.random() * 100 + "%";
-            document.getElementById('ram').style.width = Math.random() * 100 + "%";
+        function scrollToContact(service) {
+            document.getElementById('service-select').value = service;
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Tạo hiệu ứng chớp tắt cho chữ Online
-        const style = document.createElement('style');
-        style.innerHTML = "@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }";
-        document.head.appendChild(style);
+        function sendOrder() {
+            const name = document.getElementById('name').value;
+            const service = document.getElementById('service-select').value;
+            const contact = document.getElementById('contact-info').value;
 
-        setInterval(update, 1000);
-        update();
+            if(!name || !contact) {
+                alert("Vui lòng nhập đầy đủ thông tin để tụi mình liên hệ nha!");
+                return;
+            }
+
+            // Giả lập gửi đơn hàng
+            alert(`Chào ${name}!\nĐơn hàng "${service}" đã được gửi đi. Tụi mình sẽ liên hệ bạn qua ${contact} sớm nhất!`);
+            location.reload();
+        }
     </script>
 </body>
 </html>
