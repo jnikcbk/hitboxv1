@@ -2,72 +2,99 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cussa Magic Ball</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cussa Zen Garden</title>
     <style>
-        :root { --glow: #00f2ff; --bg: #050505; }
-        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; height: 100vh; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
-
-        /* Quả cầu */
-        .ball-container { position: relative; width: 300px; height: 300px; cursor: pointer; transition: 0.3s; }
-        .ball { width: 100%; height: 100%; background: radial-gradient(circle at 30% 30%, #1a1a1a, #000); border-radius: 50%; border: 2px solid #222; position: relative; box-shadow: inset -10px -10px 50px rgba(0,0,0,1), 0 0 20px rgba(0, 242, 255, 0.1); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        
-        /* Hiệu ứng mây khói bên trong */
-        .fog { position: absolute; width: 200%; height: 200%; background: radial-gradient(circle, var(--glow) 0%, transparent 60%); opacity: 0.2; filter: blur(30px); animation: move 5s infinite alternate; }
-
-        /* Câu trả lời */
-        #answer { text-align: center; font-size: 1.2rem; font-weight: bold; padding: 20px; color: var(--glow); text-shadow: 0 0 10px var(--glow); opacity: 0; transition: 1s; z-index: 10; }
-
-        /* Hiệu ứng rung */
-        .shake { animation: shakeAnim 0.1s infinite; }
-        @keyframes shakeAnim { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -2px); } 100% { transform: translate(1px, 2px); } }
-        @keyframes move { from { transform: translate(-20%, -20%); } to { transform: translate(10%, 10%); } }
-
-        .hint { margin-top: 40px; color: #444; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; }
+        body { margin: 0; overflow: hidden; background: #000; touch-action: none; }
+        canvas { display: block; filter: blur(5px) contrast(20); } /* Hiệu ứng tạo cảm giác chất lỏng hòa quyện */
+        #hint { position: absolute; top: 20px; width: 100%; text-align: center; color: #444; font-family: sans-serif; pointer-events: none; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-    <h2 style="color: #333">HÃY ĐẶT CÂU HỎI TRONG ĐẦU...</h2>
-
-    <div class="ball-container" onclick="askTheOracle()">
-        <div class="ball" id="ballBody">
-            <div class="fog"></div>
-            <div id="answer">CHẠM VÀO ĐỂ GIẢI ĐÁP</div>
-        </div>
-    </div>
-
-    <p class="hint">Click vào quả cầu để xem định mệnh</p>
+    <div id="hint">CHẠM VÀ LẮC ĐỂ TRẢI NGHIỆM</div>
+    <canvas id="canvas"></canvas>
 
     <script>
-        const answers = [
-            "CHẮC CHẮN RỒI", "ĐỪNG HY VỌNG", "CÓ THỂ LÀ VẬY", "HÃY THỬ LẠI", 
-            "KHÔNG ĐỜI NÀO", "RẤT TRIỂN VỌNG", "TƯƠNG LAI MỜ MỊT", "HỎI THẾ MÀ CŨNG HỎI", 
-            "LÀM LUÔN ĐI", "BỎ QUA ĐI", "CŨNG ĐƯỢC ĐẤY", "CHỜ THỜI CƠ"
-        ];
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
 
-        let isAsking = false;
+        let width, height;
+        let balls = [];
+        const gravity = { x: 0, y: 0.5 };
+        const mouse = { x: -1000, y: -1000, active: false };
 
-        function askTheOracle() {
-            if (isAsking) return;
-            isAsking = true;
-
-            const ball = document.getElementById('ballBody');
-            const answerTxt = document.getElementById('answer');
-
-            // Hiệu ứng bắt đầu
-            answerTxt.style.opacity = '0';
-            ball.classList.add('shake');
-            ball.style.boxShadow = "0 0 60px var(--glow)";
-
-            setTimeout(() => {
-                ball.classList.remove('shake');
-                const randomAnswer = answers[Math.floor(Math.random() * answers.length)];
-                answerTxt.innerText = randomAnswer;
-                answerTxt.style.opacity = '1';
-                isAsking = false;
-            }, 1500); // Rung trong 1.5 giây rồi hiện kết quả
+        function init() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            balls = [];
+            // Tạo 150 viên ngọc
+            for(let i = 0; i < 150; i++) {
+                balls.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: 0,
+                    vy: 0,
+                    r: Math.random() * 15 + 10,
+                    color: `hsl(${Math.random() * 40 + 180}, 80%, 50%)`
+                });
+            }
         }
+
+        // Theo dõi trọng lực điện thoại (Nếu có)
+        window.addEventListener('devicemotion', (e) => {
+            gravity.x = e.accelerationIncludingGravity.x * 0.1;
+            gravity.y = -e.accelerationIncludingGravity.y * 0.1;
+        });
+
+        window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
+        window.addEventListener('mousedown', () => mouse.active = true);
+        window.addEventListener('mouseup', () => mouse.active = false);
+
+        function animate() {
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, width, height);
+
+            balls.forEach(b => {
+                // Áp dụng trọng lực
+                b.vx += gravity.x;
+                b.vy += gravity.y;
+                
+                // Tương tác với chuột (Đẩy ra)
+                const dx = b.x - mouse.x;
+                const dy = b.y - mouse.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if(dist < 100) {
+                    b.vx += dx * 0.05;
+                    b.vy += dy * 0.05;
+                }
+
+                b.x += b.vx;
+                b.y += b.vy;
+
+                // Ma sát
+                b.vx *= 0.98;
+                b.vy *= 0.98;
+
+                // Va chạm tường
+                if(b.x + b.r > width) { b.x = width - b.r; b.vx *= -0.5; }
+                if(b.x - b.r < 0) { b.x = b.r; b.vx *= -0.5; }
+                if(b.y + b.r > height) { b.y = height - b.r; b.vy *= -0.5; }
+                if(b.y - b.r < 0) { b.y = b.r; b.vy *= -0.5; }
+
+                // Vẽ
+                ctx.fillStyle = b.color;
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+        window.addEventListener('resize', init);
     </script>
 </body>
 </html>
