@@ -3,114 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS To-Do Vercel</title>
-    
+    <title>Cussa Web App</title>
     <style>
-        :root {
-            --bg: #0f172a;
-            --card: #1e293b;
-            --text: #f8fafc;
-            --primary: #38bdf8;
-        }
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: var(--card);
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-        }
-        input {
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            width: 70%;
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px 20px;
-            background: var(--primary);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            text-align: left;
-        }
-        li {
-            background: #334155;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-        }
-        #clock {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
+        :root { --bg: #0a0a0a; --card: #171717; --primary: #0070f3; --text: #ededed; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: var(--card); padding: 2rem; border-radius: 12px; border: 1px solid #333; width: 350px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+        h1 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--primary); }
+        .input-group { display: flex; gap: 8px; margin-bottom: 20px; }
+        input { flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #333; background: #000; color: white; outline: none; }
+        input:focus { border-color: var(--primary); }
+        button { padding: 10px 15px; background: var(--primary); border: none; border-radius: 6px; color: white; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        button:hover { opacity: 0.8; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        li { background: #222; margin-bottom: 8px; padding: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .del-btn { background: #ff4444; padding: 5px 10px; font-size: 12px; }
     </style>
 </head>
 <body>
 
-    <div id="clock">00:00:00</div>
-
-    <div class="container">
-        <h2>Danh sách việc cần làm</h2>
-        <input type="text" id="taskInput" placeholder="Nhập việc cần làm...">
+<div class="card">
+    <h1>Cussa App 🚀</h1>
+    <div class="input-group">
+        <input type="text" id="taskInput" placeholder="Nhập nội dung...">
         <button onclick="addTask()">Thêm</button>
-        <ul id="taskList"></ul>
     </div>
+    <ul id="taskList"></ul>
+</div>
 
-    <script>
-        // 1. Cập nhật đồng hồ thời gian thực
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString();
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
+<script>
+    const taskInput = document.getElementById('taskInput');
+    const taskList = document.getElementById('taskList');
 
-        // 2. Xử lý thêm công việc
-        function addTask() {
-            const input = document.getElementById('taskInput');
-            const taskText = input.value.trim();
-            
-            if (taskText === "") {
-                alert("Vui lòng không để trống!");
-                return;
-            }
+    // Load dữ liệu cũ từ bộ nhớ trình duyệt khi mở web
+    document.addEventListener('DOMContentLoaded', getTasks);
 
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <span>${taskText}</span>
-                <button onclick="this.parentElement.remove()" style="background: #ef4444; padding: 2px 8px;">Xóa</button>
-            `;
-            
-            document.getElementById('taskList').appendChild(li);
-            input.value = ""; // Xóa ô nhập sau khi thêm
-        }
+    function addTask() {
+        if (taskInput.value === "") return;
+        createTaskElement(taskInput.value);
+        saveLocal(taskInput.value);
+        taskInput.value = "";
+    }
 
-        // Nhấn Enter để thêm cho tiện
-        document.getElementById('taskInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') addTask();
-        });
-    </script>
+    function createTaskElement(text) {
+        const li = document.createElement('li');
+        li.innerHTML = `${text} <button class="del-btn" onclick="removeTask(this)">Xóa</button>`;
+        taskList.appendChild(li);
+    }
+
+    function saveLocal(task) {
+        let tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+        tasks.push(task);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function getTasks() {
+        let tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+        tasks.forEach(task => createTaskElement(task));
+    }
+
+    function removeTask(btn) {
+        const text = btn.parentElement.innerText.replace('Xóa', '').trim();
+        let tasks = JSON.parse(localStorage.getItem('tasks'));
+        tasks = tasks.filter(t => t !== text);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        btn.parentElement.remove();
+    }
+
+    taskInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') addTask(); });
+</script>
+
 </body>
 </html>
