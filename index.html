@@ -3,133 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cussa Neon Toy</title>
+    <title>Cussa Magic Ball</title>
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        canvas {
-            display: block;
-        }
-        #ui {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            color: rgba(0, 255, 136, 0.5);
-            font-family: 'Segoe UI', sans-serif;
-            pointer-events: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 12px;
-        }
+        :root { --glow: #00f2ff; --bg: #050505; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; height: 100vh; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+
+        /* Quả cầu */
+        .ball-container { position: relative; width: 300px; height: 300px; cursor: pointer; transition: 0.3s; }
+        .ball { width: 100%; height: 100%; background: radial-gradient(circle at 30% 30%, #1a1a1a, #000); border-radius: 50%; border: 2px solid #222; position: relative; box-shadow: inset -10px -10px 50px rgba(0,0,0,1), 0 0 20px rgba(0, 242, 255, 0.1); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        
+        /* Hiệu ứng mây khói bên trong */
+        .fog { position: absolute; width: 200%; height: 200%; background: radial-gradient(circle, var(--glow) 0%, transparent 60%); opacity: 0.2; filter: blur(30px); animation: move 5s infinite alternate; }
+
+        /* Câu trả lời */
+        #answer { text-align: center; font-size: 1.2rem; font-weight: bold; padding: 20px; color: var(--glow); text-shadow: 0 0 10px var(--glow); opacity: 0; transition: 1s; z-index: 10; }
+
+        /* Hiệu ứng rung */
+        .shake { animation: shakeAnim 0.1s infinite; }
+        @keyframes shakeAnim { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -2px); } 100% { transform: translate(1px, 2px); } }
+        @keyframes move { from { transform: translate(-20%, -20%); } to { transform: translate(10%, 10%); } }
+
+        .hint { margin-top: 40px; color: #444; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-    <div id="ui">Di chuột hoặc chạm để tạo lụa Neon - cussa.vercel.app</div>
-    <canvas id="canvas"></canvas>
+    <h2 style="color: #333">HÃY ĐẶT CÂU HỎI TRONG ĐẦU...</h2>
+
+    <div class="ball-container" onclick="askTheOracle()">
+        <div class="ball" id="ballBody">
+            <div class="fog"></div>
+            <div id="answer">CHẠM VÀO ĐỂ GIẢI ĐÁP</div>
+        </div>
+    </div>
+
+    <p class="hint">Click vào quả cầu để xem định mệnh</p>
 
     <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
+        const answers = [
+            "CHẮC CHẮN RỒI", "ĐỪNG HY VỌNG", "CÓ THỂ LÀ VẬY", "HÃY THỬ LẠI", 
+            "KHÔNG ĐỜI NÀO", "RẤT TRIỂN VỌNG", "TƯƠNG LAI MỜ MỊT", "HỎI THẾ MÀ CŨNG HỎI", 
+            "LÀM LUÔN ĐI", "BỎ QUA ĐI", "CŨNG ĐƯỢC ĐẤY", "CHỜ THỜI CƠ"
+        ];
 
-        let width, height;
-        let particles = [];
-        const mouse = { x: undefined, y: undefined };
+        let isAsking = false;
 
-        // Cấu hình
-        const particleCount = 100;
-        const colorHue = 160; // Màu xanh Neon (thay đổi số này để đổi màu)
+        function askTheOracle() {
+            if (isAsking) return;
+            isAsking = true;
 
-        function init() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+            const ball = document.getElementById('ballBody');
+            const answerTxt = document.getElementById('answer');
+
+            // Hiệu ứng bắt đầu
+            answerTxt.style.opacity = '0';
+            ball.classList.add('shake');
+            ball.style.boxShadow = "0 0 60px var(--glow)";
+
+            setTimeout(() => {
+                ball.classList.remove('shake');
+                const randomAnswer = answers[Math.floor(Math.random() * answers.length)];
+                answerTxt.innerText = randomAnswer;
+                answerTxt.style.opacity = '1';
+                isAsking = false;
+            }, 1500); // Rung trong 1.5 giây rồi hiện kết quả
         }
-
-        window.addEventListener('resize', init);
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.x;
-            mouse.y = e.y;
-            for (let i = 0; i < 3; i++) {
-                particles.push(new Particle());
-            }
-        });
-
-        window.addEventListener('touchmove', (e) => {
-            mouse.x = e.touches[0].clientX;
-            mouse.y = e.touches[0].clientY;
-            for (let i = 0; i < 3; i++) {
-                particles.push(new Particle());
-            }
-        });
-
-        class Particle {
-            constructor() {
-                this.x = mouse.x;
-                this.y = mouse.y;
-                this.size = Math.random() * 5 + 1;
-                this.speedX = Math.random() * 3 - 1.5;
-                this.speedY = Math.random() * 3 - 1.5;
-                this.color = `hsl(${Math.random() * 60 + colorHue}, 100%, 50%)`;
-                this.life = 100;
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.size > 0.1) this.size -= 0.05;
-                this.life -= 1;
-            }
-
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function animate() {
-            // Hiệu ứng bóng ma (trail) bằng cách phủ lớp đen mờ
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, width, height);
-
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-
-                // Kết nối các hạt bằng đường kẻ nếu chúng gần nhau
-                for (let j = i; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 50) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = particles[i].color;
-                        ctx.lineWidth = 0.2;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                        ctx.closePath();
-                    }
-                }
-
-                if (particles[i].life <= 0) {
-                    particles.splice(i, 1);
-                    i--;
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-
-        init();
-        animate();
     </script>
 </body>
 </html>
