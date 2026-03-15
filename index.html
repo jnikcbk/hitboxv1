@@ -2,99 +2,94 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cussa Zen Garden</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cussa Identity Scanner</title>
     <style>
-        body { margin: 0; overflow: hidden; background: #000; touch-action: none; }
-        canvas { display: block; filter: blur(5px) contrast(20); } /* Hiệu ứng tạo cảm giác chất lỏng hòa quyện */
-        #hint { position: absolute; top: 20px; width: 100%; text-align: center; color: #444; font-family: sans-serif; pointer-events: none; letter-spacing: 2px; }
+        :root { --neon: #bc13fe; --cyan: #05ffa1; --bg: #050505; }
+        body { background: var(--bg); color: white; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
+
+        .scanner-container { position: relative; width: 250px; height: 350px; border: 2px solid var(--neon); border-radius: 20px; display: flex; align-items: center; justify-content: center; background: rgba(188, 19, 254, 0.05); cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px var(--neon); }
+
+        /* Hiệu ứng quét laser */
+        .laser { position: absolute; width: 100%; height: 3px; background: var(--cyan); top: 0; left: 0; box-shadow: 0 0 15px var(--cyan); display: none; z-index: 5; }
+        .scanning .laser { display: block; animation: scanMove 2s infinite ease-in-out; }
+
+        @keyframes scanMove { 0% { top: 0; } 50% { top: 100%; } 100% { top: 0; } }
+
+        /* Icon vân tay */
+        .fingerprint { font-size: 80px; opacity: 0.5; transition: 0.5s; }
+        .scanning .fingerprint { opacity: 1; color: var(--cyan); transform: scale(1.1); }
+
+        /* Kết quả */
+        #status { margin-top: 30px; font-size: 1.2rem; font-weight: bold; letter-spacing: 2px; text-align: center; height: 30px; }
+        #result { margin-top: 10px; font-size: 2rem; color: var(--cyan); text-shadow: 0 0 10px var(--cyan); display: none; text-transform: uppercase; }
+
+        .info { position: absolute; top: 10px; left: 10px; font-size: 10px; color: var(--neon); opacity: 0.7; }
     </style>
 </head>
 <body>
 
-    <div id="hint">CHẠM VÀ LẮC ĐỂ TRẢI NGHIỆM</div>
-    <canvas id="canvas"></canvas>
+    <div class="info">SYSTEM v4.0 // BIOMETRIC_AUTH // cussa.vercel.app</div>
+
+    <div id="status">NHẤN GIỮ ĐỂ QUÉT</div>
+
+    <div class="scanner-container" id="scanner" onmousedown="startScan()" onmouseup="stopScan()" ontouchstart="startScan()" ontouchend="stopScan()">
+        <div class="laser"></div>
+        <div class="fingerprint">🖐️</div>
+    </div>
+
+    <div id="result">ĐANG PHÂN TÍCH...</div>
 
     <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
+        let scanTimer;
+        const statusText = document.getElementById('status');
+        const resultText = document.getElementById('result');
+        const scanner = document.getElementById('scanner');
 
-        let width, height;
-        let balls = [];
-        const gravity = { x: 0, y: 0.5 };
-        const mouse = { x: -1000, y: -1000, active: false };
+        const outcomes = [
+            "THUẦN CHỦNG 100%", 
+            "GAY NGẦM (88%)", 
+            "CHUẨN MEN", 
+            "GAY CHÍNH HIỆU", 
+            "BÊ ĐÊ QUỐC TẾ", 
+            "SIÊU CẤP ĐẸP TRAI",
+            "CỨNG NHƯ THÉP"
+        ];
 
-        function init() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            balls = [];
-            // Tạo 150 viên ngọc
-            for(let i = 0; i < 150; i++) {
-                balls.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    vx: 0,
-                    vy: 0,
-                    r: Math.random() * 15 + 10,
-                    color: `hsl(${Math.random() * 40 + 180}, 80%, 50%)`
-                });
+        function startScan() {
+            resultText.style.display = 'none';
+            statusText.innerText = "ĐANG TRUY XUẤT DỮ LIỆU...";
+            scanner.classList.add('scanning');
+
+            scanTimer = setTimeout(() => {
+                showResult();
+            }, 3000); // Quét trong 3 giây
+        }
+
+        function stopScan() {
+            if (scanner.classList.contains('scanning')) {
+                clearTimeout(scanTimer);
+                scanner.classList.remove('scanning');
+                statusText.innerText = "QUÉT THẤT BẠI! NHẤN GIỮ LẠI";
             }
         }
 
-        // Theo dõi trọng lực điện thoại (Nếu có)
-        window.addEventListener('devicemotion', (e) => {
-            gravity.x = e.accelerationIncludingGravity.x * 0.1;
-            gravity.y = -e.accelerationIncludingGravity.y * 0.1;
-        });
-
-        window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
-        window.addEventListener('mousedown', () => mouse.active = true);
-        window.addEventListener('mouseup', () => mouse.active = false);
-
-        function animate() {
-            ctx.fillStyle = 'black';
-            ctx.fillRect(0, 0, width, height);
-
-            balls.forEach(b => {
-                // Áp dụng trọng lực
-                b.vx += gravity.x;
-                b.vy += gravity.y;
-                
-                // Tương tác với chuột (Đẩy ra)
-                const dx = b.x - mouse.x;
-                const dy = b.y - mouse.y;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                if(dist < 100) {
-                    b.vx += dx * 0.05;
-                    b.vy += dy * 0.05;
-                }
-
-                b.x += b.vx;
-                b.y += b.vy;
-
-                // Ma sát
-                b.vx *= 0.98;
-                b.vy *= 0.98;
-
-                // Va chạm tường
-                if(b.x + b.r > width) { b.x = width - b.r; b.vx *= -0.5; }
-                if(b.x - b.r < 0) { b.x = b.r; b.vx *= -0.5; }
-                if(b.y + b.r > height) { b.y = height - b.r; b.vy *= -0.5; }
-                if(b.y - b.r < 0) { b.y = b.r; b.vy *= -0.5; }
-
-                // Vẽ
-                ctx.fillStyle = b.color;
-                ctx.beginPath();
-                ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-                ctx.fill();
-            });
-
-            requestAnimationFrame(animate);
+        function showResult() {
+            scanner.classList.remove('scanning');
+            statusText.innerText = "PHÂN TÍCH HOÀN TẤT:";
+            const randomResult = outcomes[Math.floor(Math.random() * outcomes.length)];
+            resultText.innerText = randomResult;
+            resultText.style.display = 'block';
+            
+            // Đổi màu kết quả nếu là "Gay"
+            if(randomResult.includes("GAY") || randomResult.includes("BÊ ĐÊ")) {
+                resultText.style.color = "#ff0077";
+                resultText.style.textShadow = "0 0 15px #ff0077";
+            } else {
+                resultText.style.color = "var(--cyan)";
+                resultText.style.textShadow = "0 0 15px var(--cyan)";
+            }
         }
-
-        init();
-        animate();
-        window.addEventListener('resize', init);
     </script>
 </body>
 </html>
