@@ -3,75 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cussa Music Player</title>
+    <title>Cussa Multi-Player</title>
     <style>
-        :root { --p: #ff0077; --bg: #050505; }
-        body { background: var(--bg); color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        :root { --primary: #1DB954; --bg: #121212; --card: #181818; }
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; margin: 0; }
         
-        .player-card { background: #111; padding: 30px; border-radius: 20px; border: 1px solid #222; text-align: center; width: 300px; position: relative; z-index: 10; }
+        .container { width: 100%; max-width: 600px; text-align: center; }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; background: linear-gradient(to right, #1DB954, #00cdac); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .disk { width: 150px; height: 150px; background: linear-gradient(45deg, #333, #000); border-radius: 50%; margin: 0 auto 20px; border: 5px solid var(--p); animation: rotate 5s linear infinite paused; }
-        .disk.playing { animation-play-state: running; }
-        
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .input-box { display: flex; gap: 10px; background: var(--card); padding: 10px; border-radius: 50px; border: 1px solid #333; margin-bottom: 30px; }
+        input { flex: 1; background: transparent; border: none; color: white; padding: 5px 20px; outline: none; font-size: 1rem; }
+        button { background: var(--primary); border: none; color: black; font-weight: bold; padding: 10px 25px; border-radius: 50px; cursor: pointer; transition: 0.3s; }
+        button:hover { transform: scale(1.05); background: #1ed760; }
 
-        h2 { margin: 10px 0; font-size: 1.2rem; }
-        p { color: #888; font-size: 0.9rem; }
-
-        .controls { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
-        button { background: none; border: 2px solid white; color: white; padding: 10px 20px; border-radius: 50px; cursor: pointer; transition: 0.3s; }
-        button:hover { background: white; color: black; }
-        
-        /* Hiệu ứng sóng nhạc giả lập */
-        .visualizer { display: flex; justify-content: center; gap: 3px; height: 30px; margin-top: 20px; }
-        .bar { width: 4px; background: var(--p); border-radius: 2px; animation: bounce 1s ease-in-out infinite alternate paused; }
-        .playing .bar { animation-play-state: running; }
-
-        @keyframes bounce { from { height: 5px; } to { height: 30px; } }
+        #playerContainer { width: 100%; min-height: 200px; border-radius: 15px; overflow: hidden; background: var(--card); display: flex; align-items: center; justify-content: center; border: 1px dashed #444; }
+        .platform-icons { display: flex; gap: 20px; margin-top: 20px; opacity: 0.5; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-    <div class="player-card" id="player">
-        <div class="disk" id="disk"></div>
-        <h2>Đang phát: Lofi Chill</h2>
-        <p>Cussa Studio - 2024</p>
+    <div class="container">
+        <h1>CUSSA PLAYER</h1>
+        <p style="color: #b3b3b3; margin-bottom: 20px;">Dán link YouTube, Spotify hoặc SoundCloud vào đây</p>
 
-        <div class="visualizer">
-            <div class="bar" style="animation-delay: 0.1s"></div>
-            <div class="bar" style="animation-delay: 0.3s"></div>
-            <div class="bar" style="animation-delay: 0.2s"></div>
-            <div class="bar" style="animation-delay: 0.4s"></div>
-            <div class="bar" style="animation-delay: 0.1s"></div>
+        <div class="input-box">
+            <input type="text" id="urlInput" placeholder="https://youtube.com/watch?v=...">
+            <button onclick="handlePlay()">PHÁT</button>
         </div>
 
-        <div class="controls">
-            <button id="playBtn">PLAY</button>
+        <div id="playerContainer">
+            <span id="placeholderText">Chưa có nhạc được chọn</span>
         </div>
-        
-        <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+        <div class="platform-icons">
+            <span>● YouTube</span>
+            <span>● Spotify</span>
+            <span>● SoundCloud</span>
+        </div>
     </div>
 
     <script>
-        const audio = document.getElementById('audio');
-        const playBtn = document.getElementById('playBtn');
-        const disk = document.getElementById('disk');
-        const player = document.getElementById('player');
-        let isPlaying = false;
+        function handlePlay() {
+            const url = document.getElementById('urlInput').value.trim();
+            const container = document.getElementById('playerContainer');
+            
+            if (!url) return alert("Vui lòng dán link!");
 
-        playBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-                playBtn.innerText = "PLAY";
-                disk.classList.remove('playing');
-                player.classList.remove('playing');
-            } else {
-                audio.play();
-                playBtn.innerText = "PAUSE";
-                disk.classList.add('playing');
-                player.classList.add('playing');
+            let embedHtml = "";
+
+            // Xử lý YouTube
+            if (url.includes("youtube.com") || url.includes("youtu.be")) {
+                let videoId = "";
+                if (url.includes("v=")) videoId = url.split("v=")[1].split("&")[0];
+                else videoId = url.split("/").pop();
+                embedHtml = `<iframe width="100%" height="350" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            } 
+            // Xử lý Spotify
+            else if (url.includes("spotify.com")) {
+                let spotifyPath = url.split("spotify.com/")[1].split("?")[0];
+                embedHtml = `<iframe src="https://open.spotify.com/embed/${spotifyPath}" width="100%" height="350" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
             }
-            isPlaying = !isPlaying;
+            // Xử lý SoundCloud
+            else if (url.includes("soundcloud.com")) {
+                embedHtml = `<iframe width="100%" height="350" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&auto_play=true"></iframe>`;
+            }
+            else {
+                alert("Nền tảng này hiện chưa hỗ trợ hoặc link sai định dạng!");
+                return;
+            }
+
+            container.innerHTML = embedHtml;
+        }
+
+        // Nhấn Enter để phát luôn
+        document.getElementById('urlInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handlePlay();
         });
     </script>
 </body>
