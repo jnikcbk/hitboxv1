@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOID ECHO | DIGITAL RELIC</title>
+    <title>VOID ECHO | TRANSMISSION LOST</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
@@ -12,6 +12,7 @@
             color: #d4d4d4;
             font-family: 'Special Elite', serif;
             overflow-x: hidden;
+            image-rendering: pixelated;
         }
 
         .vhs-overlay {
@@ -19,28 +20,30 @@
             inset: 0;
             pointer-events: none;
             background: 
-                linear-gradient(rgba(255,0,0,0.02) 2px, transparent 2px),
-                linear-gradient(90deg, rgba(0,255,0,0.02) 2px, transparent 2px);
-            background-size: 3px 3px;
-            animation: vhs-flicker 0.08s infinite alternate, vhs-roll 8s linear infinite;
-            opacity: 0.6;
+                linear-gradient(rgba(255,0,0,0.03) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(0,255,0,0.03) 2px, transparent 2px),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" /><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.1 0"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.07"/></svg>');
+            background-size: 3px 3px, 3px 3px, 100% 100%;
+            animation: vhs-flicker 0.12s infinite alternate, vhs-roll 10s linear infinite;
+            mix-blend-mode: overlay;
+            opacity: 0.7;
         }
 
         @keyframes vhs-flicker {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 0.4; }
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 0.35; }
         }
 
         @keyframes vhs-roll {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-3px); }
+            100% { transform: translateY(-4px); }
         }
 
         .typewriter {
             overflow: hidden;
             white-space: nowrap;
-            border-right: 0.15em solid #d4d4d4;
-            animation: typing 4s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+            border-right: 0.15em solid #ff69b4;
+            animation: typing 5s steps(45, end) forwards, blink-caret 0.8s step-end infinite;
         }
 
         @keyframes typing {
@@ -50,18 +53,73 @@
 
         @keyframes blink-caret {
             from, to { border-color: transparent }
-            50% { border-color: #d4d4d4 }
+            50% { border-color: #ff69b4 }
+        }
+
+        .glitch-text {
+            position: relative;
+            animation: glitch-skew 4s infinite;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff00aa;
+            clip: rect(0, 900px, 0, 0);
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: 2px 0 #00ffff;
+            clip: rect(0, 900px, 0, 0);
+            animation: glitch-anim2 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(20px, 9999px, 40px, 0); transform: skew(0.5deg); }
+            5% { clip: rect(60px, 9999px, 80px, 0); transform: skew(0.2deg); }
+            10% { clip: rect(10px, 9999px, 30px, 0); transform: skew(-0.8deg); }
+            /* ... thêm nhiều keyframe random hơn nếu muốn */
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(30px, 9999px, 50px, 0); transform: skew(-0.3deg); }
+            /* ... */
         }
 
         .relic-card {
             transition: all 0.6s ease;
             background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+            border: 2px solid #ff69b4/30;
         }
 
         .relic-card:hover {
-            transform: translateY(-10px) rotate(1deg);
-            box-shadow: 0 25px 50px -12px rgba(255, 105, 180, 0.25);
+            transform: translateY(-12px) rotate(2deg);
+            box-shadow: 0 30px 60px -15px rgba(255,105,180,0.4);
             border-color: #ff69b4;
+        }
+
+        .easter-egg {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #000;
+            color: #ff0000;
+            font-size: 4rem;
+            font-weight: bold;
+            text-align: center;
+            padding-top: 40vh;
+            z-index: 9999;
         }
     </style>
 </head>
@@ -69,72 +127,83 @@
 
     <div class="vhs-overlay"></div>
 
-    <!-- Floating noise particles -->
-    <div class="fixed inset-0 pointer-events-none">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,105,180,0.08)_0%,transparent_50%)]"></div>
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(0,255,255,0.06)_0%,transparent_50%)]"></div>
-    </div>
+    <div class="fixed inset-0 pointer-events-none bg-[radial-gradient(circle_at_15%_25%,rgba(255,105,180,0.12)_0%,transparent_60%)],radial-gradient(circle_at_85%_75%,rgba(0,255,255,0.08)_0%,transparent_60%)"></div>
 
-    <div class="relative z-10 max-w-5xl mx-auto px-6 py-20">
-        <!-- Header / Title -->
-        <div class="text-center mb-24">
-            <h1 class="text-7xl md:text-9xl font-black tracking-tighter text-white mb-4 drop-shadow-[0_0_30px_rgba(255,105,180,0.6)]">
+    <div class="relative z-10 max-w-5xl mx-auto px-6 py-16 md:py-24">
+        <div class="text-center mb-20 md:mb-32">
+            <h1 class="text-7xl md:text-10xl font-black tracking-[-0.05em] text-white mb-6 glitch-text" data-text="VOID ECHO">
                 VOID ECHO
             </h1>
-            <p class="text-3xl md:text-5xl text-pink-400 font-bold tracking-widest typewriter">
-                DIGITAL RELIC 199X–202X
+            <p class="text-4xl md:text-6xl text-pink-500 font-bold tracking-[0.3em] typewriter">
+                TRANSMISSION LOST 199X–202X
             </p>
         </div>
 
-        <!-- Main Content Cards -->
-        <div class="grid md:grid-cols-2 gap-12 mb-24">
-            <!-- Card 1 -->
-            <div class="relic-card border-2 border-white/20 rounded-3xl p-10 shadow-2xl">
-                <div class="text-pink-500 text-2xl font-bold mb-6 tracking-wider">SIGNAL LOST</div>
-                <p class="text-lg leading-relaxed mb-8 text-gray-300">
-                    Đây không phải là trang chủ.  
-                    Đây là tàn tích của một thời đại đã chết.  
-                    Những pixel còn sót lại sau khi internet sụp đổ.
+        <div class="grid md:grid-cols-2 gap-10 md:gap-16 mb-24">
+            <div class="relic-card rounded-3xl p-10 md:p-12 shadow-2xl border-2 border-pink-900/40">
+                <div class="text-pink-400 text-3xl font-bold mb-8 tracking-widest">ERROR 404: SOUL NOT FOUND</div>
+                <p class="text-xl leading-relaxed mb-10 text-gray-300">
+                    Kết nối đã bị cắt.  
+                    Chỉ còn tiếng rè rè và những khung hình vỡ vụn.  
+                    Bạn đang xem tàn tích của một trang web đã chết từ lâu.
                 </p>
-                <div class="text-sm text-gray-500 font-mono">
-                    > LAST TRANSMISSION: 17/03/2026 21:37 +07
+                <div class="text-sm text-gray-500 font-mono opacity-70">
+                    > SIGNAL STRENGTH: 0.03%  
+                    > LAST KNOWN LOCATION: UNKNOWN  
+                    > DO NOT ATTEMPT TO REBOOT
                 </div>
             </div>
 
-            <!-- Card 2 -->
-            <div class="relic-card border-2 border-white/20 rounded-3xl p-10 shadow-2xl">
-                <div class="text-cyan-400 text-2xl font-bold mb-6 tracking-wider">FRAGMENT 001</div>
-                <p class="text-lg leading-relaxed mb-8 text-gray-300">
-                    Chúng tôi từng nghĩ mạng là vĩnh cửu.  
-                    Nhưng mọi thứ đều có ngày bị xóa sổ.  
-                    Chỉ còn lại những dòng code... và tiếng vọng.
+            <div class="relic-card rounded-3xl p-10 md:p-12 shadow-2xl border-2 border-cyan-900/40">
+                <div class="text-cyan-400 text-3xl font-bold mb-8 tracking-widest">FRAGMENT RECOVERED</div>
+                <p class="text-xl leading-relaxed mb-10 text-gray-300">
+                    "Chúng tôi từng tin rằng dữ liệu là vĩnh cửu.  
+                    Nhưng internet cũng có ngày bị lãng quên.  
+                    Giờ chỉ còn tiếng vọng... và static."
                 </p>
-                <div class="flex gap-4">
-                    <span class="px-4 py-2 bg-pink-900/40 rounded-full text-sm text-pink-300">404</span>
-                    <span class="px-4 py-2 bg-cyan-900/40 rounded-full text-sm text-cyan-300">GHOST</span>
+                <div class="flex flex-wrap gap-4 text-sm">
+                    <span class="px-5 py-2 bg-pink-950/50 rounded-full text-pink-300 border border-pink-700/30">LOST MEDIA</span>
+                    <span class="px-5 py-2 bg-cyan-950/50 rounded-full text-cyan-300 border border-cyan-700/30">ANALOG HORROR</span>
+                    <span class="px-5 py-2 bg-purple-950/50 rounded-full text-purple-300 border border-purple-700/30">DECAY CORE</span>
                 </div>
             </div>
         </div>
 
-        <!-- Bottom Section -->
         <div class="text-center">
-            <p class="text-2xl md:text-4xl text-pink-300 mb-12 font-bold tracking-widest">
-                TRANSMISSION ENDED
+            <p class="text-4xl md:text-6xl text-pink-400 mb-12 font-bold tracking-[0.4em] glitch-text" data-text="NO CARRIER">
+                NO CARRIER
             </p>
 
-            <div class="flex flex-wrap justify-center gap-6 text-sm uppercase tracking-widest">
-                <a href="#" class="hover:text-pink-400 transition">ARCHIVE</a>
-                <span class="text-gray-600">•</span>
-                <a href="#" class="hover:text-cyan-400 transition">RECOVER</a>
-                <span class="text-gray-600">•</span>
-                <a href="#" class="hover:text-pink-400 transition">ABANDON</a>
+            <div class="flex flex-wrap justify-center gap-8 text-base md:text-lg uppercase tracking-widest opacity-80">
+                <a href="#" class="hover:text-pink-400 transition">TRY RECONNECT</a>
+                <span class="text-gray-700">•</span>
+                <a href="#" class="hover:text-cyan-400 transition">VIEW STATIC LOG</a>
+                <span class="text-gray-700">•</span>
+                <a href="#" class="hover:text-pink-400 transition">TERMINATE SIGNAL</a>
             </div>
 
-            <p class="mt-16 text-xs text-gray-600 font-mono">
-                NO DATA REMAINING • STATIC ONLY • DO NOT POWER CYCLE
+            <p class="mt-20 text-xs md:text-sm text-gray-600 font-mono opacity-60">
+                STATIC INTENSITY: MAX • DO NOT ADJUST TRACKING • PICTURE MAY ROLL
             </p>
         </div>
     </div>
 
+    <!-- Easter Egg: Nhấn phím E để hiện thông điệp bí mật -->
+    <div id="easterEgg" class="easter-egg font-black">
+        WAKE UP.  
+        YOU ARE NOT ALONE IN THE VOID.
+    </div>
+
+    <script>
+        // Easter egg: Nhấn phím E
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'e') {
+                document.getElementById('easterEgg').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('easterEgg').style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
 </body>
 </html>
