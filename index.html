@@ -3,130 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deal Săn Sale - Top Ưu Đãi Hot Hôm Nay</title>
+    <title>Poké Adventure - Bắt Pokémon Miễn Phí</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <meta name="description" content="Tổng hợp deal giảm giá Shopee, Lazada, Tiki, TikTok Shop hot nhất hôm nay. Săn sale rẻ mỗi ngày!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
-        .deal-card {
-            transition: all 0.3s ease;
+        body {
+            background: linear-gradient(to bottom, #0f172a, #1e293b);
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            min-height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=1600&auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
-        .deal-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        .pixel-font { font-family: 'Press Start 2P', cursive; }
+        .poke-card {
+            transition: all 0.4s ease;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(167, 139, 250, 0.3);
         }
-        .tag-hot {
-            background: linear-gradient(90deg, #ef4444, #f97316);
+        .poke-card:hover {
+            transform: scale(1.08) translateY(-8px);
+            border-color: #a78bfa;
+            box-shadow: 0 0 40px rgba(167, 139, 250, 0.5);
+        }
+        .catch-btn {
+            background: linear-gradient(45deg, #ec4899, #a855f7);
+            transition: all 0.3s;
+        }
+        .catch-btn:hover {
+            background: linear-gradient(45deg, #db2777, #9333ea);
+            transform: scale(1.1);
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="flex flex-col">
 
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <h1 class="text-2xl md:text-3xl font-bold text-indigo-600">Deal Săn Sale</h1>
-            <div class="text-sm text-gray-600">
-                Cập nhật: <span class="font-medium">17/03/2026</span>
+    <header class="bg-black/70 backdrop-blur-xl border-b border-purple-500/30 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+            <h1 class="text-4xl font-black text-purple-400 pixel-font tracking-widest">
+                Poké Adventure
+            </h1>
+            <div class="flex items-center gap-6">
+                <div class="text-xl">
+                    Poké Ball: <span id="balls">10</span>
+                </div>
+                <div class="text-xl font-bold text-yellow-400">
+                    Điểm: <span id="score">0</span>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero -->
-    <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-16 md:py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl md:text-6xl font-bold mb-6">Săn Deal Hot – Tiết Kiệm Ngay Hôm Nay</h2>
-            <p class="text-xl md:text-2xl mb-10 opacity-90">
-                Tổng hợp ưu đãi giảm giá Shopee, Lazada, Tiki, TikTok Shop tốt nhất
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#deals" class="px-8 py-4 bg-white text-indigo-700 font-semibold rounded-full text-lg shadow-lg hover:bg-gray-100 transition">
-                    Xem deal ngay
-                </a>
-                <a href="https://t.me/dealsan" target="_blank" class="px-8 py-4 border-2 border-white text-white font-semibold rounded-full text-lg hover:bg-white/10 transition">
-                    Kênh Telegram
-                </a>
+    <!-- Main Game Area -->
+    <main class="flex-1 flex flex-col items-center justify-center p-6">
+        <div id="gameArea" class="w-full max-w-4xl">
+            <!-- Pokémon hiển thị -->
+            <div id="pokemonDisplay" class="text-center mb-12">
+                <img id="pokemonImg" src="" class="mx-auto w-64 h-64 object-contain drop-shadow-2xl" alt="Pokémon">
+                <h2 id="pokemonName" class="text-5xl font-black mt-6 text-white capitalize"></h2>
+                <p id="pokemonInfo" class="text-xl text-purple-300 mt-2"></p>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex flex-col md:flex-row gap-6 justify-center">
+                <button onclick="findPokemon()" 
+                        class="catch-btn px-12 py-6 text-2xl font-bold rounded-2xl text-white shadow-lg">
+                    TÌM POKÉMON MỚI
+                </button>
+                
+                <button onclick="tryCatch()" 
+                        class="px-12 py-6 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-2xl rounded-2xl shadow-lg transition-all">
+                    BẮT (1 Poké Ball)
+                </button>
+            </div>
+
+            <!-- Log -->
+            <div id="log" class="mt-12 text-center text-xl text-purple-300 min-h-[100px]">
+                Nhấn "Tìm Pokémon Mới" để bắt đầu cuộc phiêu lưu!
             </div>
         </div>
-    </section>
-
-    <!-- Deals Grid -->
-    <section id="deals" class="py-16 md:py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center mb-12">
-                <h3 class="text-3xl md:text-4xl font-bold text-gray-900">Top Deal Hot Hôm Nay</h3>
-                <span class="tag-hot px-5 py-2 rounded-full text-white font-bold text-sm uppercase tracking-wider">
-                    Cập nhật liên tục
-                </span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Deal Item 1 -->
-                <a href="https://shopee.vn/affiliate-link-1" target="_blank" class="deal-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-200">
-                    <div class="h-48 bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center">
-                        <span class="text-white text-5xl font-black">70%</span>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-xl font-bold text-gray-900 mb-2">Tai nghe Bluetooth giảm sập sàn</h4>
-                        <p class="text-gray-600 mb-4">Từ 890k xuống còn 249k – Shopee Mall</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Shopee</span>
-                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Còn 47 cái</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Deal Item 2 -->
-                <a href="https://lazada.vn/affiliate-link-2" target="_blank" class="deal-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-200">
-                    <div class="h-48 bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center">
-                        <span class="text-white text-5xl font-black">MUA 1 TẶNG 1</span>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-xl font-bold text-gray-900 mb-2">Son dưỡng cao cấp 2 cây chỉ 199k</h4>
-                        <p class="text-gray-600 mb-4">Lazada Brand Day – freeship toàn quốc</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Lazada</span>
-                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Hot</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Deal Item 3 -->
-                <a href="https://tiktokshop.vn/affiliate-link-3" target="_blank" class="deal-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-200">
-                    <div class="h-48 bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
-                        <span class="text-white text-5xl font-black">FLASH SALE</span>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="text-xl font-bold text-gray-900 mb-2">Áo thun oversize chỉ 99k</h4>
-                        <p class="text-gray-600 mb-4">TikTok Shop – mã giảm thêm 20k</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">TikTok Shop</span>
-                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Bán chạy</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Thêm 3–6 deal nữa tương tự nếu muốn -->
-            </div>
-
-            <div class="text-center mt-16">
-                <p class="text-lg text-gray-600 mb-6">
-                    Muốn nhận deal sớm nhất? Join kênh Telegram miễn phí nhé!
-                </p>
-                <a href="https://t.me/dealsan" target="_blank" 
-                   class="inline-block px-10 py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full text-lg shadow-lg transition">
-                    Tham gia Telegram Deal
-                </a>
-            </div>
-        </div>
-    </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-12 text-center">
-        <p>© 2026 Deal Săn Sale • Không bán hàng trực tiếp • Chỉ tổng hợp ưu đãi</p>
-        <p class="mt-2 text-sm">Liên hệ hợp tác: minh@dealsan.vn</p>
+    <footer class="bg-black/70 border-t border-purple-500/30 py-6 text-center text-sm text-gray-400">
+        Poké Adventure • Không liên quan đến Pokémon chính thức • Chỉ để vui thôi nhé!
     </footer>
 
+    <script>
+        // Danh sách Pokémon đơn giản (id từ PokeAPI, bạn có thể thêm nhiều hơn)
+        const pokemonList = [
+            { id: 1, name: 'bulbasaur', hp: 45, atk: 49 },
+            { id: 4, name: 'charmander', hp: 39, atk: 52 },
+            { id: 7, name: 'squirtle', hp: 44, atk: 48 },
+            { id: 25, name: 'pikachu', hp: 35, atk: 55 },
+            { id: 133, name: 'eevee', hp: 55, atk: 55 },
+            { id: 52, name: 'meowth', hp: 40, atk: 45 },
+            { id: 92, name: 'gastly', hp: 30, atk: 35 },
+            { id: 147, name: 'dratini', hp: 41, atk: 64 }
+        ];
+
+        let balls = 10;
+        let score = 0;
+        let currentPokemon = null;
+
+        const pokemonImg = document.getElementById('pokemonImg');
+        const pokemonName = document.getElementById('pokemonName');
+        const pokemonInfo = document.getElementById('pokemonInfo');
+        const log = document.getElementById('log');
+        const ballsEl = document.getElementById('balls');
+        const scoreEl = document.getElementById('score');
+
+        function updateUI() {
+            ballsEl.textContent = balls;
+            scoreEl.textContent = score;
+        }
+
+        function findPokemon() {
+            if (balls <= 0) {
+                log.textContent = "Hết Poké Ball rồi! Chơi lại sau nhé!";
+                return;
+            }
+
+            currentPokemon = pokemonList[Math.floor(Math.random() * pokemonList.length)];
+            pokemonImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${currentPokemon.id}.png`;
+            pokemonName.textContent = currentPokemon.name.toUpperCase();
+            pokemonInfo.textContent = `HP: ${currentPokemon.hp} | ATK: ${currentPokemon.atk}`;
+
+            log.textContent = `Một con ${currentPokemon.name.toUpperCase()} xuất hiện! Sẵn sàng bắt chưa?`;
+            updateUI();
+        }
+
+        function tryCatch() {
+            if (!currentPokemon) {
+                log.textContent = "Chưa có Pokémon nào để bắt!";
+                return;
+            }
+
+            if (balls <= 0) {
+                log.textContent = "Hết Poké Ball rồi!";
+                return;
+            }
+
+            balls--;
+            updateUI();
+
+            // Xác suất bắt: càng HP cao càng khó bắt (giả lập đơn giản)
+            const catchRate = Math.random();
+            const successChance = 0.6 - (currentPokemon.hp / 200); // HP cao → khó bắt hơn
+
+            if (catchRate < successChance) {
+                score += currentPokemon.atk * 5 + 50;
+                log.innerHTML = `<span class="text-green-400 text-2xl">BẮT THÀNH CÔNG!</span><br>Nhận ${currentPokemon.atk * 5 + 50} điểm!`;
+                currentPokemon = null;
+                pokemonImg.src = "";
+                pokemonName.textContent = "";
+                pokemonInfo.textContent = "";
+            } else {
+                log.innerHTML = `<span class="text-red-400">Thất bại!</span><br>${currentPokemon.name.toUpperCase()} thoát mất rồi...`;
+            }
+
+            if (balls <= 0) {
+                log.innerHTML += "<br><br><span class='text-yellow-400 text-xl'>HẾT POKÉ BALL! CHƠI LẠI SAU NHA!</span>";
+            }
+        }
+
+        updateUI();
+    </script>
 </body>
 </html>
