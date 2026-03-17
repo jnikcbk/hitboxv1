@@ -3,212 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAIZEN | CYBER ELITE</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <title>THÁM TỬ MẠNH 50 ẢI - SIÊU QUÂN HÚT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@500;600;700&display=swap');
-        
         body {
-            background: #050505;
-            color: #e2e8f0;
-            font-family: 'Space Grotesk', sans-serif;
+            background: #000;
+            color: #0f0;
+            font-family: 'Orbitron', sans-serif;
+            overflow: hidden;
         }
-        
-        .hero-bg {
-            background: radial-gradient(circle at 30% 20%, #1e3a8a 0%, transparent 60%),
-                        radial-gradient(circle at 70% 80%, #6b21a8 0%, transparent 60%);
-        }
-        
-        .neon-text {
-            text-shadow: 0 0 20px #3b82f6,
-                         0 0 40px #3b82f6;
-        }
-        
-        .card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .card:hover {
-            transform: translateY(-12px) scale(1.03);
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.5);
-        }
-        
         .scanline {
-            position: relative;
-        }
-        
-        .scanline::after {
-            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(transparent, rgba(255,255,255,0.03), transparent);
-            animation: scan 4s linear infinite;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            background: linear-gradient(to bottom, transparent, rgba(0,255,0,0.03), transparent);
+            animation: scan 8s linear infinite;
         }
-        
         @keyframes scan {
             0% { transform: translateY(-100%); }
             100% { transform: translateY(300%); }
         }
+        .glitch {
+            animation: glitch 4s infinite;
+        }
+        @keyframes glitch {
+            0% { text-shadow: 2px 0 #0f0, -2px 0 #f0f; }
+            2% { text-shadow: -2px 0 #0f0, 2px 0 #f0f; }
+            4% { text-shadow: 0 0 #0f0; }
+            100% { text-shadow: 0 0 #0f0; }
+        }
+        .level-card {
+            transition: all 0.3s;
+        }
+        .level-card:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 30px #0f0;
+        }
+        .solved {
+            background: rgba(0,255,0,0.15);
+            border-color: #0f0;
+        }
     </style>
 </head>
-<body class="hero-bg min-h-screen overflow-x-hidden">
-    <!-- NAV -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur-xl border-b border-white/10">
-        <div class="max-w-5xl mx-auto px-8 py-5 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-black text-2xl">K</div>
-                <span class="text-3xl font-black tracking-tighter neon-text">KAIZEN</span>
-            </div>
-            <div class="flex gap-8 text-sm font-medium">
-                <a href="#about" class="hover:text-blue-400 transition">ABOUT</a>
-                <a href="#projects" class="hover:text-blue-400 transition">PROJECTS</a>
-                <a href="#skills" class="hover:text-blue-400 transition">SKILLS</a>
-                <a href="#connect" class="hover:text-blue-400 transition">CONNECT</a>
-            </div>
-        </div>
-    </nav>
+<body class="min-h-screen relative">
+    <div class="scanline"></div>
 
-    <!-- HERO -->
-    <section class="min-h-screen flex items-center justify-center pt-20 scanline">
-        <div class="max-w-3xl text-center px-6">
-            <div class="mx-auto w-40 h-40 rounded-3xl border-4 border-blue-500 p-2 shadow-[0_0_60px_rgba(59,130,246,0.6)] mb-8">
-                <img src="https://api.dicebear.com/7.x/pixel-art/svg?seed=KaizenElite" 
-                     class="rounded-3xl bg-zinc-900" alt="Kaizen">
-            </div>
-            
-            <h1 class="text-7xl font-black tracking-tighter neon-text mb-3">KAIZEN</h1>
-            <p class="text-2xl text-blue-400 font-medium tracking-widest">ELITE DIGITAL ARCHITECT</p>
-            
-            <div class="mt-12 flex justify-center gap-6">
-                <a href="#projects" 
-                   class="px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl text-lg transition-all">
-                    XEM CÔNG TRÌNH
-                </a>
-                <a href="#connect" 
-                   class="px-10 py-4 border border-white/30 hover:border-white text-white font-bold rounded-2xl text-lg transition-all">
-                    LIÊN HỆ
-                </a>
-            </div>
-            
-            <div class="mt-20 text-xs font-mono text-zinc-500 tracking-[4px] flex items-center justify-center gap-8">
-                <div>● SYSTEM ONLINE</div>
-                <div>● ENCRYPTED 2048-BIT</div>
-                <div>● NEURAL LINK ACTIVE</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="py-24 bg-black/40">
-        <div class="max-w-5xl mx-auto px-8">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 class="text-5xl font-black tracking-tighter mb-6">Tôi là Kaizen.<br>Người xây dựng thế giới ảo.</h2>
-                    <p class="text-lg text-zinc-400 leading-relaxed">
-                        Developer • Game Designer • Cybersecurity Enthusiast<br>
-                        Đã tạo ra Pokémon Hunt, KaizenMC Trade Center và hàng loạt dự án web-game đỉnh cao.
-                    </p>
-                    <div class="mt-10 text-sm font-mono text-blue-400">
-                        HANOI, VIETNAM • 2026
-                    </div>
+    <!-- Header -->
+    <div class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-[#0f0]/30 p-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-black glitch text-[#0f0] tracking-widest">
+                THÁM TỬ MẠNH 50 ẢI
+            </h1>
+            <div class="flex items-center gap-6">
+                <div class="text-xl font-bold">
+                    Cấp độ: <span id="currentLevel">1</span>/50
                 </div>
-                <div class="space-y-6 text-sm">
-                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 card">
-                        <p class="font-medium mb-2">CURRENT FOCUS</p>
-                        <p class="text-zinc-400">Xây dựng hệ sinh thái game blockchain + Web3 cho cộng đồng Việt Nam</p>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 card">
-                        <p class="font-medium mb-2">PHILOSOPHY</p>
-                        <p class="text-zinc-400">"Làm cho mọi thứ trở nên đẹp hơn, nhanh hơn và thú vị hơn mỗi ngày."</p>
-                    </div>
+                <div class="text-xl font-bold text-[#0f0]">
+                    Điểm: <span id="score">0</span>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="py-24">
-        <div class="max-w-5xl mx-auto px-8">
-            <h2 class="text-5xl font-black tracking-tighter mb-12 text-center">CÔNG TRÌNH NỔI BẬT</h2>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Project 1 -->
-                <div class="bg-zinc-900/70 border border-white/10 rounded-3xl overflow-hidden card">
-                    <div class="h-64 bg-[url('https://picsum.photos/id/1015/800/600')] bg-cover"></div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="text-2xl font-bold">Pokémon Hunt</h3>
-                                <p class="text-blue-400 text-sm">Game săn bắt Pokémon realtime</p>
-                            </div>
-                            <span class="text-xs px-4 py-1 bg-green-500/20 text-green-400 rounded-full">LIVE</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm">Firebase • PokeAPI • Tailwind đẹp lung linh</p>
-                    </div>
-                </div>
+    <!-- Game Area -->
+    <div class="pt-24 pb-16 px-6 max-w-5xl mx-auto">
+        <div id="gameScreen" class="bg-black/70 border border-[#0f0]/40 rounded-3xl p-10 min-h-[70vh] relative">
+            <!-- Màn hình chào mừng -->
+            <div id="welcome" class="absolute inset-0 flex flex-col items-center justify-center text-center z-10 bg-black/90">
+                <h2 class="text-6xl font-black glitch mb-8 text-[#0f0]">SIÊU QUÂN HÚT</h2>
+                <p class="text-2xl mb-12 text-[#0f0]/80">Thử thách trí tuệ - 50 ải cực khó</p>
+                <button onclick="startGame()" 
+                        class="px-16 py-6 bg-[#0f0]/20 hover:bg-[#0f0]/40 border-2 border-[#0f0] rounded-2xl text-3xl font-black transition-all hover:scale-110">
+                    BẮT ĐẦU THÁM TỬ
+                </button>
+            </div>
 
-                <!-- Project 2 -->
-                <div class="bg-zinc-900/70 border border-white/10 rounded-3xl overflow-hidden card">
-                    <div class="h-64 bg-[url('https://picsum.photos/id/201/800/600')] bg-cover"></div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="text-2xl font-bold">KaizenMC Trade Center</h3>
-                                <p class="text-blue-400 text-sm">Chợ Pokémon toàn cầu</p>
-                            </div>
-                            <span class="text-xs px-4 py-1 bg-amber-500/20 text-amber-400 rounded-full">HOT</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm">Realtime trading • Glassmorphism UI • Transaction an toàn</p>
-                    </div>
+            <!-- Câu hỏi chính -->
+            <div id="questionArea" class="hidden">
+                <h2 id="questionTitle" class="text-4xl font-bold mb-10 text-center glitch"></h2>
+                
+                <div id="riddleText" class="text-2xl leading-relaxed mb-12 text-center font-mono"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                    <button onclick="checkAnswer(0)" class="option-btn level-card bg-black/50 border border-[#0f0]/30 rounded-2xl p-8 text-xl hover:bg-[#0f0]/10 transition-all"></button>
+                    <button onclick="checkAnswer(1)" class="option-btn level-card bg-black/50 border border-[#0f0]/30 rounded-2xl p-8 text-xl hover:bg-[#0f0]/10 transition-all"></button>
+                    <button onclick="checkAnswer(2)" class="option-btn level-card bg-black/50 border border-[#0f0]/30 rounded-2xl p-8 text-xl hover:bg-[#0f0]/10 transition-all"></button>
+                    <button onclick="checkAnswer(3)" class="option-btn level-card bg-black/50 border border-[#0f0]/30 rounded-2xl p-8 text-xl hover:bg-[#0f0]/10 transition-all"></button>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- SKILLS -->
-    <section id="skills" class="py-24 bg-black/50">
-        <div class="max-w-5xl mx-auto px-8">
-            <h2 class="text-5xl font-black tracking-tighter mb-12 text-center">KỸ NĂNG</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">Firebase</div>
-                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">Tailwind CSS</div>
-                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">JavaScript ES6+</div>
-                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">PokeAPI Mastery</div>
-                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">Game Design</div>
-                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">Realtime Database</div>
-                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">UI/UX Neon</div>
-                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">Cyber Security</div>
+            <!-- Hoàn thành ải -->
+            <div id="levelComplete" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/90 z-20">
+                <h2 class="text-6xl font-black text-[#0f0] mb-8 glitch">ẢI HOÀN THÀNH!</h2>
+                <p class="text-3xl mb-12">Điểm hiện tại: <span id="levelScore"></span></p>
+                <button onclick="nextLevel()" 
+                        class="px-16 py-6 bg-[#0f0]/30 hover:bg-[#0f0]/50 border-2 border-[#0f0] rounded-2xl text-3xl font-black transition-all hover:scale-110">
+                    TIẾP TỤC ẢI SAU
+                </button>
             </div>
-        </div>
-    </section>
 
-    <!-- CONNECT -->
-    <section id="connect" class="py-24">
-        <div class="max-w-5xl mx-auto px-8 text-center">
-            <h2 class="text-5xl font-black tracking-tighter mb-8">KẾT NỐI VỚI TÔI</h2>
-            
-            <div class="flex flex-wrap justify-center gap-6">
-                <a href="#" class="group px-12 py-6 bg-white/5 hover:bg-white hover:text-black border border-white/10 rounded-3xl font-bold text-xl transition-all">FACEBOOK</a>
-                <a href="#" class="group px-12 py-6 bg-white/5 hover:bg-[#5865F2] border border-white/10 rounded-3xl font-bold text-xl transition-all">DISCORD</a>
-                <a href="#" class="group px-12 py-6 bg-white/5 hover:bg-[#FF0000] border border-white/10 rounded-3xl font-bold text-xl transition-all">YOUTUBE</a>
-                <a href="#" class="group px-12 py-6 bg-white/5 hover:bg-[#00FF00] border border-white/10 rounded-3xl font-bold text-xl transition-all">TELEGRAM</a>
-            </div>
-            
-            <div class="mt-16 text-xs font-mono text-zinc-500">
-                © 2026 KAIZEN ELITE • ALL RIGHTS RESERVED • MADE WITH NEON
+            <!-- Game Over -->
+            <div id="gameOver" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/95 z-20">
+                <h2 class="text-7xl font-black text-red-500 mb-8 glitch">GAME OVER</h2>
+                <p class="text-4xl mb-12">Điểm cao nhất: <span id="finalScore"></span></p>
+                <button onclick="restartGame()" 
+                        class="px-16 py-6 bg-red-900/50 hover:bg-red-800 border-2 border-red-500 rounded-2xl text-3xl font-black transition-all hover:scale-110">
+                    CHƠI LẠI
+                </button>
             </div>
         </div>
-    </section>
+    </div>
 
     <script>
-        // Khởi tạo Tailwind
-        function init() {
-            // Tailwind đã load
+        const riddles = [
+            {
+                question: "ẢI 1 - Bí ẩn cơ bản",
+                riddle: "Tôi nói mà không mở miệng, tôi khóc mà không có nước mắt. Tôi là gì?",
+                options: ["Gió", "Đồng hồ", "Ảnh", "Bóng"],
+                correct: 2
+            },
+            {
+                question: "ẢI 2 - Logic số",
+                riddle: "Số tiếp theo trong dãy là gì? 2, 3, 5, 7, 11, ...",
+                options: ["13", "12", "15", "17"],
+                correct: 0
+            },
+            {
+                question: "ẢI 3 - Câu đố cổ điển",
+                riddle: "Càng rửa càng bẩn. Là gì?",
+                options: ["Nước", "Xà phòng", "Bụi bẩn", "Chén bát"],
+                correct: 0
+            },
+            {
+                question: "ẢI 4 - Siêu khó",
+                riddle: "Tôi có thành phố nhưng không có nhà. Tôi có sông nhưng không có nước. Tôi là gì?",
+                options: ["Bản đồ", "Mặt trăng", "Bầu trời", "Giấc mơ"],
+                correct: 0
+            },
+            // Thêm đủ 50 ải (dưới đây chỉ là ví dụ, bạn có thể tự thêm)
+            // Mỗi ải có: question, riddle, options (4 đáp án), correct (index đúng 0-3)
+        ];
+
+        // Tạm thời chỉ có 4 ải mẫu - bạn có thể mở rộng lên 50
+        // Để đủ 50, copy format trên và thay nội dung
+
+        let currentLevel = 0;
+        let score = 0;
+
+        function startGame() {
+            document.getElementById('welcome').classList.add('hidden');
+            document.getElementById('questionArea').classList.remove('hidden');
+            loadLevel();
         }
-        window.onload = init;
+
+        function loadLevel() {
+            if (currentLevel >= riddles.length) {
+                document.getElementById('questionArea').classList.add('hidden');
+                document.getElementById('gameOver').classList.remove('hidden');
+                document.getElementById('finalScore').innerText = score;
+                return;
+            }
+
+            const level = riddles[currentLevel];
+            document.getElementById('currentLevel').innerText = currentLevel + 1;
+            document.getElementById('questionTitle').innerText = level.question;
+            document.getElementById('riddleText').innerText = level.riddle;
+
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach((btn, i) => {
+                btn.innerText = level.options[i];
+                btn.classList.remove('solved');
+            });
+        }
+
+        function checkAnswer(selected) {
+            const level = riddles[currentLevel];
+            const buttons = document.querySelectorAll('.option-btn');
+
+            if (selected === level.correct) {
+                score += 100 + currentLevel * 20;
+                document.getElementById('score').innerText = score;
+                buttons[selected].classList.add('solved');
+                setTimeout(() => {
+                    document.getElementById('questionArea').classList.add('hidden');
+                    document.getElementById('levelComplete').classList.remove('hidden');
+                    document.getElementById('levelScore').innerText = score;
+                }, 800);
+            } else {
+                buttons[selected].style.background = 'rgba(255,0,0,0.2)';
+                setTimeout(() => {
+                    document.getElementById('questionArea').classList.add('hidden');
+                    document.getElementById('gameOver').classList.remove('hidden');
+                    document.getElementById('finalScore').innerText = score;
+                }, 800);
+            }
+        }
+
+        function nextLevel() {
+            currentLevel++;
+            document.getElementById('levelComplete').classList.add('hidden');
+            document.getElementById('questionArea').classList.remove('hidden');
+            loadLevel();
+        }
+
+        function restartGame() {
+            currentLevel = 0;
+            score = 0;
+            document.getElementById('score').innerText = 0;
+            document.getElementById('gameOver').classList.add('hidden');
+            startGame();
+        }
     </script>
 </body>
 </html>
