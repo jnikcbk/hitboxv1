@@ -3,58 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAIZEN | ELITE PORTFOLIO</title>
+    <title>KAIZEN | CYBER ELITE</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@500;600;700&display=swap');
+        
         body {
             background: #050505;
             color: #e2e8f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
         }
-        /* Hiệu ứng hạt bụi bay lờ lững */
-        .bg-animate {
-            background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #000 100%);
+        
+        .hero-bg {
+            background: radial-gradient(circle at 30% 20%, #1e3a8a 0%, transparent 60%),
+                        radial-gradient(circle at 70% 80%, #6b21a8 0%, transparent 60%);
         }
-        .glow-card:hover {
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
-            transform: translateY(-5px);
+        
+        .neon-text {
+            text-shadow: 0 0 20px #3b82f6,
+                         0 0 40px #3b82f6;
+        }
+        
+        .card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.5);
+        }
+        
+        .scanline {
+            position: relative;
+        }
+        
+        .scanline::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent, rgba(255,255,255,0.03), transparent);
+            animation: scan 4s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(300%); }
         }
     </style>
 </head>
-<body class="bg-animate min-h-screen flex items-center justify-center p-6">
-
-    <div class="relative w-full max-w-2xl">
-        <div class="absolute -top-20 -left-20 w-64 h-64 bg-blue-600 rounded-full blur-[120px] opacity-20"></div>
-        <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-purple-600 rounded-full blur-[120px] opacity-20"></div>
-
-        <div class="relative z-10 bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-10 text-center shadow-2xl">
-            
-            <div class="mx-auto w-32 h-32 rounded-full border-4 border-blue-500 p-1 mb-6 shadow-[0_0_20px_rgba(59,130,246,0.5)]">
-                <img src="https://api.dicebear.com/7.x/pixel-art/svg?seed=Kaizen" class="rounded-full bg-zinc-800" alt="Avatar">
+<body class="hero-bg min-h-screen overflow-x-hidden">
+    <!-- NAV -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-5xl mx-auto px-8 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-black text-2xl">K</div>
+                <span class="text-3xl font-black tracking-tighter neon-text">KAIZEN</span>
             </div>
-
-            <h1 class="text-4xl font-black tracking-tighter text-white mb-2 uppercase italic">Kaizen User</h1>
-            <p class="text-blue-400 font-mono text-sm tracking-widest mb-8 uppercase">Hacker • Developer • Designer</p>
-
-            <div class="space-y-4">
-                <a href="#" class="glow-card block w-full py-4 bg-white/5 border border-white/10 rounded-2xl font-bold tracking-widest hover:bg-white hover:text-black transition-all duration-300">
-                    FACEBOOK
-                </a>
-                <a href="#" class="glow-card block w-full py-4 bg-white/5 border border-white/10 rounded-2xl font-bold tracking-widest hover:bg-blue-500 hover:text-white transition-all duration-300">
-                    DISCORD SERVER
-                </a>
-                <a href="#" class="glow-card block w-full py-4 bg-white/5 border border-white/10 rounded-2xl font-bold tracking-widest hover:bg-red-500 hover:text-white transition-all duration-300">
-                    YOUTUBE CHANNEL
-                </a>
-            </div>
-
-            <div class="mt-12 overflow-hidden whitespace-nowrap">
-                <p class="inline-block animate-[pulse_2s_infinite] text-[10px] text-zinc-500 font-mono tracking-[0.5em] uppercase">
-                    System active • Security encrypted • Welcome to my world
-                </p>
+            <div class="flex gap-8 text-sm font-medium">
+                <a href="#about" class="hover:text-blue-400 transition">ABOUT</a>
+                <a href="#projects" class="hover:text-blue-400 transition">PROJECTS</a>
+                <a href="#skills" class="hover:text-blue-400 transition">SKILLS</a>
+                <a href="#connect" class="hover:text-blue-400 transition">CONNECT</a>
             </div>
         </div>
-    </div>
+    </nav>
 
+    <!-- HERO -->
+    <section class="min-h-screen flex items-center justify-center pt-20 scanline">
+        <div class="max-w-3xl text-center px-6">
+            <div class="mx-auto w-40 h-40 rounded-3xl border-4 border-blue-500 p-2 shadow-[0_0_60px_rgba(59,130,246,0.6)] mb-8">
+                <img src="https://api.dicebear.com/7.x/pixel-art/svg?seed=KaizenElite" 
+                     class="rounded-3xl bg-zinc-900" alt="Kaizen">
+            </div>
+            
+            <h1 class="text-7xl font-black tracking-tighter neon-text mb-3">KAIZEN</h1>
+            <p class="text-2xl text-blue-400 font-medium tracking-widest">ELITE DIGITAL ARCHITECT</p>
+            
+            <div class="mt-12 flex justify-center gap-6">
+                <a href="#projects" 
+                   class="px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl text-lg transition-all">
+                    XEM CÔNG TRÌNH
+                </a>
+                <a href="#connect" 
+                   class="px-10 py-4 border border-white/30 hover:border-white text-white font-bold rounded-2xl text-lg transition-all">
+                    LIÊN HỆ
+                </a>
+            </div>
+            
+            <div class="mt-20 text-xs font-mono text-zinc-500 tracking-[4px] flex items-center justify-center gap-8">
+                <div>● SYSTEM ONLINE</div>
+                <div>● ENCRYPTED 2048-BIT</div>
+                <div>● NEURAL LINK ACTIVE</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-24 bg-black/40">
+        <div class="max-w-5xl mx-auto px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-5xl font-black tracking-tighter mb-6">Tôi là Kaizen.<br>Người xây dựng thế giới ảo.</h2>
+                    <p class="text-lg text-zinc-400 leading-relaxed">
+                        Developer • Game Designer • Cybersecurity Enthusiast<br>
+                        Đã tạo ra Pokémon Hunt, KaizenMC Trade Center và hàng loạt dự án web-game đỉnh cao.
+                    </p>
+                    <div class="mt-10 text-sm font-mono text-blue-400">
+                        HANOI, VIETNAM • 2026
+                    </div>
+                </div>
+                <div class="space-y-6 text-sm">
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 card">
+                        <p class="font-medium mb-2">CURRENT FOCUS</p>
+                        <p class="text-zinc-400">Xây dựng hệ sinh thái game blockchain + Web3 cho cộng đồng Việt Nam</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 card">
+                        <p class="font-medium mb-2">PHILOSOPHY</p>
+                        <p class="text-zinc-400">"Làm cho mọi thứ trở nên đẹp hơn, nhanh hơn và thú vị hơn mỗi ngày."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-24">
+        <div class="max-w-5xl mx-auto px-8">
+            <h2 class="text-5xl font-black tracking-tighter mb-12 text-center">CÔNG TRÌNH NỔI BẬT</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-zinc-900/70 border border-white/10 rounded-3xl overflow-hidden card">
+                    <div class="h-64 bg-[url('https://picsum.photos/id/1015/800/600')] bg-cover"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-2xl font-bold">Pokémon Hunt</h3>
+                                <p class="text-blue-400 text-sm">Game săn bắt Pokémon realtime</p>
+                            </div>
+                            <span class="text-xs px-4 py-1 bg-green-500/20 text-green-400 rounded-full">LIVE</span>
+                        </div>
+                        <p class="text-zinc-400 text-sm">Firebase • PokeAPI • Tailwind đẹp lung linh</p>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-zinc-900/70 border border-white/10 rounded-3xl overflow-hidden card">
+                    <div class="h-64 bg-[url('https://picsum.photos/id/201/800/600')] bg-cover"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-2xl font-bold">KaizenMC Trade Center</h3>
+                                <p class="text-blue-400 text-sm">Chợ Pokémon toàn cầu</p>
+                            </div>
+                            <span class="text-xs px-4 py-1 bg-amber-500/20 text-amber-400 rounded-full">HOT</span>
+                        </div>
+                        <p class="text-zinc-400 text-sm">Realtime trading • Glassmorphism UI • Transaction an toàn</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-24 bg-black/50">
+        <div class="max-w-5xl mx-auto px-8">
+            <h2 class="text-5xl font-black tracking-tighter mb-12 text-center">KỸ NĂNG</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">Firebase</div>
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">Tailwind CSS</div>
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">JavaScript ES6+</div>
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">PokeAPI Mastery</div>
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">Game Design</div>
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">Realtime Database</div>
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">UI/UX Neon</div>
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center card">Cyber Security</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONNECT -->
+    <section id="connect" class="py-24">
+        <div class="max-w-5xl mx-auto px-8 text-center">
+            <h2 class="text-5xl font-black tracking-tighter mb-8">KẾT NỐI VỚI TÔI</h2>
+            
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="#" class="group px-12 py-6 bg-white/5 hover:bg-white hover:text-black border border-white/10 rounded-3xl font-bold text-xl transition-all">FACEBOOK</a>
+                <a href="#" class="group px-12 py-6 bg-white/5 hover:bg-[#5865F2] border border-white/10 rounded-3xl font-bold text-xl transition-all">DISCORD</a>
+                <a href="#" class="group px-12 py-6 bg-white/5 hover:bg-[#FF0000] border border-white/10 rounded-3xl font-bold text-xl transition-all">YOUTUBE</a>
+                <a href="#" class="group px-12 py-6 bg-white/5 hover:bg-[#00FF00] border border-white/10 rounded-3xl font-bold text-xl transition-all">TELEGRAM</a>
+            </div>
+            
+            <div class="mt-16 text-xs font-mono text-zinc-500">
+                © 2026 KAIZEN ELITE • ALL RIGHTS RESERVED • MADE WITH NEON
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Khởi tạo Tailwind
+        function init() {
+            // Tailwind đã load
+        }
+        window.onload = init;
+    </script>
 </body>
 </html>
