@@ -3,126 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THÁI BẢO 2012 | BẠN TỚ SIÊU ngáo</title>
+    <title>MINH | SIMPLE SPACE</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Creepster&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background: #000;
-            color: #ff00aa;
-            font-family: 'VT323', monospace;
-            image-rendering: pixelated;
-            overflow-x: hidden;
+            background: #0a0a0f;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
         }
-
-        .cheu-bg {
-            background: repeating-linear-gradient(45deg, #000 0px, #111 10px, #000 20px);
+        .gradient-text {
+            background: linear-gradient(90deg, #a78bfa, #7dd3fc, #6ee7b7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .pixel-title {
-            font-family: 'Press+Start+2P', cursive;
-            text-shadow: 4px 4px #000, -4px -4px #000, 4px -4px #000, -4px 4px #000;
+        .card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(167, 139, 250, 0.2);
         }
-
-        .blink-pink {
-            animation: blink-pink 0.8s infinite;
+        .card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(167, 139, 250, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
-
-        @keyframes blink-pink {
-            0%, 100% { opacity: 1; color: #ff00aa; }
-            50% { opacity: 0.6; color: #ff69b4; }
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: #a78bfa;
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
         }
-
-        .old-web {
-            max-width: 960px;
-            margin: 0 auto;
-            background: #000;
-            border: 8px solid #ff00aa;
-            box-shadow: 0 0 40px #ff00aa;
-        }
-
-        .guestbook-entry {
-            border-bottom: 4px dotted #ff69b4;
-            padding: 16px;
-            background: rgba(255,0,170,0.05);
-        }
-
-        .guestbook-entry:nth-child(even) {
-            background: rgba(0,255,255,0.05);
+        @keyframes blink {
+            50% { opacity: 0; }
         }
     </style>
 </head>
-<body class="cheu-bg">
+<body class="min-h-screen flex flex-col">
 
-    <div class="old-web mx-auto my-12 rounded-lg overflow-hidden shadow-2xl border-8 border-pink-600">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/50">
+        <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl font-black gradient-text">MINH</span>
+            </div>
+            <nav class="flex gap-10 text-sm font-medium uppercase tracking-wider">
+                <a href="#home" class="hover:text-purple-400 transition">Home</a>
+                <a href="#about" class="hover:text-purple-400 transition">About</a>
+                <a href="#work" class="hover:text-purple-400 transition">Work</a>
+                <a href="#contact" class="hover:text-purple-400 transition">Contact</a>
+            </nav>
+        </div>
+    </header>
 
-        <!-- Header kiểu web 2012 -->
-        <div class="bg-gradient-to-r from-pink-900 to-purple-900 p-8 text-center">
-            <h1 class="text-6xl md:text-8xl font-black pixel-title blink-pink">
-                THÁI BẢO 2012
+    <!-- Hero -->
+    <main class="flex-1 flex items-center justify-center pt-24 pb-16 px-6">
+        <div class="max-w-5xl text-center">
+            <h1 class="text-6xl md:text-8xl font-black gradient-text mb-6 tracking-tight">
+                MINH
             </h1>
-            <p class="text-4xl text-yellow-300 mt-4 font-bold">
-                BẠN TỚ SIÊU NGÁO NHẤT HỆ MẶT TRỜI 🌟
+            <p class="text-2xl md:text-4xl text-slate-300 mb-12 font-light">
+                <span class="typewriter">Developer. Dreamer. Night owl.</span><span class="cursor">|</span>
             </p>
-            <p class="text-2xl text-pink-300 mt-2">
-                "Yêu là yêu thôi, không cần lý do nha mấy chế ơi!"
-            </p>
-        </div>
 
-        <!-- Profile kiểu MySpace/Facebook 2012 -->
-        <div class="p-8 grid md:grid-cols-2 gap-12">
-            <div>
-                <div class="text-4xl text-cyan-400 mb-6">INFO CỦA BẢO</div>
-                <ul class="text-2xl space-y-4">
-                    <li>✨ Tên: Thái Bảo (biệt danh: Bảo điên)</li>
-                    <li>🎂 Sinh năm: 1998 (2012 mới 14 tuổi, cute phô mai que)</li>
-                    <li>🏠 Quê quán: Hà Nội, phố cổ, hay lang thang Hồ Gươm</li>
-                    <li>❤️ Tình trạng: Độc thân vui tính, crush thì nhiều mà ngại tỏ tình</li>
-                    <li>🎸 Sở thích: Chơi guitar, rap freestyle, ăn kem Tràng Tiền</li>
-                    <li>💬 Status: "Ai thương Bảo thì comment dưới nha, Bảo rep hết!"</li>
-                </ul>
-            </div>
-
-            <div class="text-center">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" 
-                     alt="Thái Bảo cute 2012" 
-                     class="rounded-full w-64 h-64 mx-auto border-8 border-pink-500 shadow-2xl">
-                <p class="mt-6 text-2xl text-yellow-300 blink-pink">
-                    "Cheu nhất là bạn thân nha mấy chế!"
-                </p>
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="#work" 
+                   class="px-10 py-5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium rounded-full text-lg transition-all shadow-lg shadow-purple-500/30">
+                    Xem dự án
+                </a>
+                <a href="#contact" 
+                   class="px-10 py-5 border border-purple-500/50 hover:bg-purple-950/50 text-purple-400 font-medium rounded-full text-lg transition-all">
+                    Nói chuyện
+                </a>
             </div>
         </div>
+    </main>
 
-        <!-- Guestbook / Bình luận kiểu 2012 -->
-        <div class="p-8 bg-black/80">
-            <h2 class="text-5xl text-pink-500 mb-8 text-center">GUESTBOOK - AI ĐANG CHEU BẢO?</h2>
+    <!-- About -->
+    <section id="about" class="py-24 bg-slate-950/50">
+        <div class="max-w-5xl mx-auto px-6">
+            <h2 class="text-5xl font-black gradient-text mb-16 text-center">About me</h2>
             
-            <div class="space-y-8">
-                <div class="guestbook-entry">
-                    <p class="text-2xl text-cyan-300">Ngọc Lan • 15/07/2012</p>
-                    <p class="text-xl">Bảo ơi crush Bảo lâu rồi nhaaaa! Cheu Bảo vl luôn á!</p>
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8 text-lg leading-relaxed text-slate-300">
+                    <p>
+                        Chào, mình là Minh.  
+                        Sinh ra và lớn lên ở Hà Nội, hiện đang sống trong thế giới code, cà phê đen và những đêm thức trắng.
+                    </p>
+                    <p>
+                        Mình thích xây dựng những thứ đẹp, nhanh và có ý nghĩa.  
+                        Từ web app nhỏ xinh đến những dự án thử nghiệm điên rồ – mình đều làm vì vui và vì tò mò.
+                    </p>
+                    <p class="text-purple-400 font-medium">
+                        Hiện tại: đang học hỏi, code hàng ngày, nghe lo-fi, và mơ về những thứ lớn hơn.
+                    </p>
                 </div>
 
-                <div class="guestbook-entry">
-                    <p class="text-2xl text-yellow-300">Minh Minh (bạn thân) • 17/03/2026</p>
-                    <p class="text-xl">Ê Bảo, mày vẫn cheu như ngày nào không? 2012 nhớ mày vl luôn á!</p>
-                </div>
-
-                <div class="guestbook-entry">
-                    <p class="text-2xl text-pink-400">Fan ẩn danh • Hôm nay</p>
-                    <p class="text-xl">Thái Bảo mãi đỉnh! Cheu Bảo đến già luôn nhaaaa ❤️❤️</p>
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-cyan-500/20 rounded-3xl blur-3xl"></div>
+                    <div class="card rounded-3xl p-8 relative z-10">
+                        <div class="text-2xl font-bold gradient-text mb-6">Tech Stack</div>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>JavaScript / TypeScript</div>
+                            <div>React / Next.js</div>
+                            <div>Tailwind CSS</div>
+                            <div>Node.js</div>
+                            <div>Firebase / Supabase</div>
+                            <div>Python (đang học)</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Footer retro -->
-        <div class="bg-gradient-to-r from-pink-900 to-purple-900 p-8 text-center text-xl">
-            <p>© 2012 - 2026 THÁI BẢO • BẠN TỚ SIÊU NGÁO</p>
-            <p class="mt-4 text-yellow-300">
-                Cảm ơn đã ghé thăm! Comment bên dưới để Bảo biết bạn đang cheu Bảo nha~
-            </p>
+    <!-- Work / Projects -->
+    <section id="work" class="py-24">
+        <div class="max-w-5xl mx-auto px-6">
+            <h2 class="text-5xl font-black gradient-text mb-16 text-center">Some things I've built</h2>
+
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="card rounded-3xl overflow-hidden">
+                    <div class="h-64 bg-gradient-to-br from-purple-900 to-indigo-900 flex items-center justify-center">
+                        <span class="text-6xl font-black text-white/30">PokéHunt</span>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-3xl font-bold mb-4">Pokémon Hunt</h3>
+                        <p class="text-slate-400 mb-4">Game săn Pokémon realtime với Firebase & PokeAPI</p>
+                        <p class="text-sm text-purple-400">2025 • Fullstack • Fun project</p>
+                    </div>
+                </div>
+
+                <div class="card rounded-3xl overflow-hidden">
+                    <div class="h-64 bg-gradient-to-br from-cyan-900 to-teal-900 flex items-center justify-center">
+                        <span class="text-6xl font-black text-white/30">Trade Center</span>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-3xl font-bold mb-4">KaizenMC Trade</h3>
+                        <p class="text-slate-400 mb-4">Chợ giao dịch Pokémon online</p>
+                        <p class="text-sm text-cyan-400">2026 • Realtime DB • Glassmorphism</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
+    <!-- Contact -->
+    <section id="contact" class="py-24 bg-slate-950/70">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-5xl font-black gradient-text mb-12">Nói chuyện với mình đi</h2>
+            <p class="text-xl text-slate-300 mb-12 max-w-2xl mx-auto">
+                Nếu bạn muốn collab, hỏi code, hoặc chỉ đơn giản là chém gió về lo-fi, game, code đêm khuya... cứ nhắn nhé.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-6 text-lg">
+                <a href="mailto:minh@example.com" 
+                   class="px-10 py-5 bg-purple-600 hover:bg-purple-500 rounded-full font-medium transition-all shadow-lg shadow-purple-500/30">
+                    Gửi email
+                </a>
+                <a href="#" 
+                   class="px-10 py-5 border border-purple-500/50 hover:bg-purple-950/50 rounded-full font-medium transition-all">
+                    Discord / Telegram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 text-center text-slate-500 border-t border-slate-800">
+        <p>© 2026 Minh • Made in Hanoi with code & coffee</p>
+        <p class="mt-2 text-sm">No ads. No tracking. Just vibes.</p>
+    </footer>
+
+    <script>
+        // Typewriter effect for hero text
+        const typewriterText = "Developer. Dreamer. Night owl.";
+        let i = 0;
+        const speed = 100;
+        const el = document.querySelector('.typewriter');
+
+        function typeWriter() {
+            if (i < typewriterText.length) {
+                el.innerHTML += typewriterText.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+
+        setTimeout(typeWriter, 800);
+    </script>
 </body>
 </html>
