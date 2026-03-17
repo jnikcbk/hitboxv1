@@ -3,217 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THÁM TỬ MẠNH 50 ẢI - SIÊU QUÂN HÚT</title>
+    <title>KAIZEN | DIGITAL VOID</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&display=swap" rel="stylesheet">
     <style>
         body {
             background: #000;
-            color: #0f0;
-            font-family: 'Orbitron', sans-serif;
-            overflow: hidden;
+            color: #00ff41;
+            font-family: 'VT323', monospace;
+            overflow-x: hidden;
         }
-        .scanline {
+        
+        .crt {
+            position: relative;
+            filter: brightness(1.1) contrast(1.2);
+        }
+        
+        .crt::after {
+            content: " ";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0,0,0,0.05) 1px,
+                transparent 2px
+            );
             pointer-events: none;
-            background: linear-gradient(to bottom, transparent, rgba(0,255,0,0.03), transparent);
-            animation: scan 8s linear infinite;
+            animation: flicker 0.15s infinite alternate;
         }
-        @keyframes scan {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(300%); }
+        
+        @keyframes flicker {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.1; }
         }
-        .glitch {
-            animation: glitch 4s infinite;
+        
+        .terminal {
+            background: rgba(0, 20, 0, 0.85);
+            border: 2px solid #00ff41;
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.3);
         }
-        @keyframes glitch {
-            0% { text-shadow: 2px 0 #0f0, -2px 0 #f0f; }
-            2% { text-shadow: -2px 0 #0f0, 2px 0 #f0f; }
-            4% { text-shadow: 0 0 #0f0; }
-            100% { text-shadow: 0 0 #0f0; }
+        
+        .blink {
+            animation: blink 1s step-end infinite;
         }
-        .level-card {
-            transition: all 0.3s;
+        
+        @keyframes blink {
+            50% { opacity: 0; }
         }
-        .level-card:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 30px #0f0;
-        }
-        .solved {
-            background: rgba(0,255,0,0.15);
-            border-color: #0f0;
+        
+        .matrix-rain {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.15;
         }
     </style>
 </head>
-<body class="min-h-screen relative">
-    <div class="scanline"></div>
+<body class="min-h-screen flex flex-col relative crt">
 
-    <!-- Header -->
-    <div class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-[#0f0]/30 p-4">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <h1 class="text-3xl font-black glitch text-[#0f0] tracking-widest">
-                THÁM TỬ MẠNH 50 ẢI
-            </h1>
-            <div class="flex items-center gap-6">
-                <div class="text-xl font-bold">
-                    Cấp độ: <span id="currentLevel">1</span>/50
+    <!-- Matrix rain background -->
+    <canvas id="matrixRain" class="matrix-rain"></canvas>
+
+    <!-- Main Terminal Interface -->
+    <div class="flex-1 flex items-center justify-center p-6">
+        <div class="terminal w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl">
+            <!-- Terminal Header -->
+            <div class="bg-[#001100] border-b border-[#00ff41]/50 p-4 flex items-center gap-4">
+                <div class="w-4 h-4 rounded-full bg-[#00ff41]"></div>
+                <div class="w-4 h-4 rounded-full bg-yellow-400"></div>
+                <div class="w-4 h-4 rounded-full bg-red-500"></div>
+                <span class="text-[#00ff41] font-bold tracking-widest">KAIZEN@VOID:~/</span>
+                <span class="blink text-[#00ff41]">█</span>
+            </div>
+
+            <!-- Terminal Body -->
+            <div class="p-8 text-lg leading-relaxed font-mono">
+                <p class="mb-6">
+                    <span class="text-[#00ff41] font-bold">user@kaizen:~$</span> whoami
+                </p>
+                <p class="mb-10 pl-8 text-[#00ff88]">
+                    kaizen • digital ghost • code alchemist • void architect
+                </p>
+
+                <p class="mb-6">
+                    <span class="text-[#00ff41] font-bold">user@kaizen:~$</span> cat about.txt
+                </p>
+                <div class="pl-8 mb-12 text-[#00ff88] space-y-4">
+                    <p>> Hiện đang sống trong khoảng trống số</p>
+                    <p>> Viết code như thở, phá hệ thống như ăn sáng</p>
+                    <p>> Thích: neon, glitch, retro-futurism, terminal aesthetics</p>
+                    <p>> Không thích: UI lộn xộn, code spaghetti, người dùng Windows mặc định</p>
                 </div>
-                <div class="text-xl font-bold text-[#0f0]">
-                    Điểm: <span id="score">0</span>
+
+                <p class="mb-6">
+                    <span class="text-[#00ff41] font-bold">user@kaizen:~$</span> ls projects/
+                </p>
+                <div class="pl-8 grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="border border-[#00ff41]/30 p-4 rounded hover:bg-[#001100] transition">
+                        <p class="font-bold text-[#00ffaa]">Pokémon Hunt</p>
+                        <p class="text-sm opacity-80">Realtime Pokémon săn bắt • Firebase + PokeAPI</p>
+                    </div>
+                    <div class="border border-[#00ff41]/30 p-4 rounded hover:bg-[#001100] transition">
+                        <p class="font-bold text-[#00ffaa]">KaizenMC Trade</p>
+                        <p class="text-sm opacity-80">Global Pokémon marketplace • Glassmorphism UI</p>
+                    </div>
+                    <div class="border border-[#00ff41]/30 p-4 rounded hover:bg-[#001100] transition">
+                        <p class="font-bold text-[#00ffaa]">Matrix Void</p>
+                        <p class="text-sm opacity-80">Terminal aesthetic portfolio • 2026 edition</p>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Game Area -->
-    <div class="pt-24 pb-16 px-6 max-w-5xl mx-auto">
-        <div id="gameScreen" class="bg-black/70 border border-[#0f0]/40 rounded-3xl p-10 min-h-[70vh] relative">
-            <!-- Màn hình chào mừng -->
-            <div id="welcome" class="absolute inset-0 flex flex-col items-center justify-center text-center z-10 bg-black/90">
-                <h2 class="text-6xl font-black glitch mb-8 text-[#0f0]">SIÊU QUÂN HÚT</h2>
-                <p class="text-2xl mb-12 text-[#0f0]/80">Thử thách trí tuệ - 50 ải cực khó</p>
-                <button onclick="startGame()" 
-                        class="px-16 py-6 bg-[#0f0]/20 hover:bg-[#0f0]/40 border-2 border-[#0f0] rounded-2xl text-3xl font-black transition-all hover:scale-110">
-                    BẮT ĐẦU THÁM TỬ
-                </button>
-            </div>
-
-            <!-- Câu hỏi chính -->
-            <div id="questionArea" class="hidden">
-                <h2 id="questionTitle" class="text-4xl font-bold mb-10 text-center glitch"></h2>
-                
-                <div id="riddleText" class="text-2xl leading-relaxed mb-12 text-center font-mono"></div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-                    <button onclick="checkAnswer(0)" class="option-btn level-card bg-black/50 border border-[#0f0]/30 rounded-2xl p-8 text-xl hover:bg-[#0f0]/10 transition-all"></button>
-                    <button onclick="checkAnswer(1)" class="option-btn level-card bg-black/50 border border-[#0f0]/30 rounded-2xl p-8 text-xl hover:bg-[#0f0]/10 transition-all"></button>
-                    <button onclick="checkAnswer(2)" class="option-btn level-card bg-black/50 border border-[#0f0]/30 rounded-2xl p-8 text-xl hover:bg-[#0f0]/10 transition-all"></button>
-                    <button onclick="checkAnswer(3)" class="option-btn level-card bg-black/50 border border-[#0f0]/30 rounded-2xl p-8 text-xl hover:bg-[#0f0]/10 transition-all"></button>
+                <p class="mb-6">
+                    <span class="text-[#00ff41] font-bold">user@kaizen:~$</span> connect --list
+                </p>
+                <div class="pl-8 flex flex-wrap gap-4">
+                    <a href="#" class="px-6 py-3 border border-[#00ff41]/50 hover:bg-[#00ff41]/20 rounded transition">DISCORD</a>
+                    <a href="#" class="px-6 py-3 border border-[#00ff41]/50 hover:bg-[#00ff41]/20 rounded transition">TELEGRAM</a>
+                    <a href="#" class="px-6 py-3 border border-[#00ff41]/50 hover:bg-[#00ff41]/20 rounded transition">GITHUB</a>
+                    <a href="#" class="px-6 py-3 border border-[#00ff41]/50 hover:bg-[#00ff41]/20 rounded transition">YOUTUBE</a>
                 </div>
             </div>
 
-            <!-- Hoàn thành ải -->
-            <div id="levelComplete" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/90 z-20">
-                <h2 class="text-6xl font-black text-[#0f0] mb-8 glitch">ẢI HOÀN THÀNH!</h2>
-                <p class="text-3xl mb-12">Điểm hiện tại: <span id="levelScore"></span></p>
-                <button onclick="nextLevel()" 
-                        class="px-16 py-6 bg-[#0f0]/30 hover:bg-[#0f0]/50 border-2 border-[#0f0] rounded-2xl text-3xl font-black transition-all hover:scale-110">
-                    TIẾP TỤC ẢI SAU
-                </button>
-            </div>
-
-            <!-- Game Over -->
-            <div id="gameOver" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/95 z-20">
-                <h2 class="text-7xl font-black text-red-500 mb-8 glitch">GAME OVER</h2>
-                <p class="text-4xl mb-12">Điểm cao nhất: <span id="finalScore"></span></p>
-                <button onclick="restartGame()" 
-                        class="px-16 py-6 bg-red-900/50 hover:bg-red-800 border-2 border-red-500 rounded-2xl text-3xl font-black transition-all hover:scale-110">
-                    CHƠI LẠI
-                </button>
+            <!-- Terminal Footer -->
+            <div class="bg-[#001100] border-t border-[#00ff41]/30 p-4 text-center text-sm opacity-70">
+                SYSTEM UPTIME: 00d 13h 37m • LAST BOOT: 2026-03-17 09:11 +07 • ALL CONNECTIONS ENCRYPTED
             </div>
         </div>
     </div>
 
     <script>
-        const riddles = [
-            {
-                question: "ẢI 1 - Bí ẩn cơ bản",
-                riddle: "Tôi nói mà không mở miệng, tôi khóc mà không có nước mắt. Tôi là gì?",
-                options: ["Gió", "Đồng hồ", "Ảnh", "Bóng"],
-                correct: 2
-            },
-            {
-                question: "ẢI 2 - Logic số",
-                riddle: "Số tiếp theo trong dãy là gì? 2, 3, 5, 7, 11, ...",
-                options: ["13", "12", "15", "17"],
-                correct: 0
-            },
-            {
-                question: "ẢI 3 - Câu đố cổ điển",
-                riddle: "Càng rửa càng bẩn. Là gì?",
-                options: ["Nước", "Xà phòng", "Bụi bẩn", "Chén bát"],
-                correct: 0
-            },
-            {
-                question: "ẢI 4 - Siêu khó",
-                riddle: "Tôi có thành phố nhưng không có nhà. Tôi có sông nhưng không có nước. Tôi là gì?",
-                options: ["Bản đồ", "Mặt trăng", "Bầu trời", "Giấc mơ"],
-                correct: 0
-            },
-            // Thêm đủ 50 ải (dưới đây chỉ là ví dụ, bạn có thể tự thêm)
-            // Mỗi ải có: question, riddle, options (4 đáp án), correct (index đúng 0-3)
-        ];
+        // Matrix rain effect
+        const canvas = document.getElementById('matrixRain');
+        const ctx = canvas.getContext('2d');
 
-        // Tạm thời chỉ có 4 ải mẫu - bạn có thể mở rộng lên 50
-        // Để đủ 50, copy format trên và thay nội dung
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
 
-        let currentLevel = 0;
-        let score = 0;
+        const matrixChars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン".split("");
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
 
-        function startGame() {
-            document.getElementById('welcome').classList.add('hidden');
-            document.getElementById('questionArea').classList.remove('hidden');
-            loadLevel();
-        }
+        const drops = Array(Math.floor(columns)).fill(1);
 
-        function loadLevel() {
-            if (currentLevel >= riddles.length) {
-                document.getElementById('questionArea').classList.add('hidden');
-                document.getElementById('gameOver').classList.remove('hidden');
-                document.getElementById('finalScore').innerText = score;
-                return;
-            }
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            const level = riddles[currentLevel];
-            document.getElementById('currentLevel').innerText = currentLevel + 1;
-            document.getElementById('questionTitle').innerText = level.question;
-            document.getElementById('riddleText').innerText = level.riddle;
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
 
-            const buttons = document.querySelectorAll('.option-btn');
-            buttons.forEach((btn, i) => {
-                btn.innerText = level.options[i];
-                btn.classList.remove('solved');
-            });
-        }
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
 
-        function checkAnswer(selected) {
-            const level = riddles[currentLevel];
-            const buttons = document.querySelectorAll('.option-btn');
+                ctx.fillText(text, x, y);
 
-            if (selected === level.correct) {
-                score += 100 + currentLevel * 20;
-                document.getElementById('score').innerText = score;
-                buttons[selected].classList.add('solved');
-                setTimeout(() => {
-                    document.getElementById('questionArea').classList.add('hidden');
-                    document.getElementById('levelComplete').classList.remove('hidden');
-                    document.getElementById('levelScore').innerText = score;
-                }, 800);
-            } else {
-                buttons[selected].style.background = 'rgba(255,0,0,0.2)';
-                setTimeout(() => {
-                    document.getElementById('questionArea').classList.add('hidden');
-                    document.getElementById('gameOver').classList.remove('hidden');
-                    document.getElementById('finalScore').innerText = score;
-                }, 800);
+                if (y > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
             }
         }
 
-        function nextLevel() {
-            currentLevel++;
-            document.getElementById('levelComplete').classList.add('hidden');
-            document.getElementById('questionArea').classList.remove('hidden');
-            loadLevel();
-        }
+        setInterval(draw, 35);
 
-        function restartGame() {
-            currentLevel = 0;
-            score = 0;
-            document.getElementById('score').innerText = 0;
-            document.getElementById('gameOver').classList.add('hidden');
-            startGame();
-        }
+        window.addEventListener('resize', () => {
+            canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth;
+        });
     </script>
 </body>
 </html>
