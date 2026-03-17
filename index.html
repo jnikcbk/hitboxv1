@@ -3,180 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THÁI BẢO | OFFICIAL FANPAGE</title>
+    <title>THÁI BẢO 2012 | BẠN TỚ SIÊU ngáo</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@700;900&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Creepster&family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: white;
-            font-family: 'Orbitron', sans-serif;
+            background: #000;
+            color: #ff00aa;
+            font-family: 'VT323', monospace;
+            image-rendering: pixelated;
             overflow-x: hidden;
         }
 
-        .hero-bg {
-            background: url('https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&q=80') center/cover no-repeat fixed;
-            background-blend-mode: overlay;
-            background-color: rgba(0,0,0,0.6);
+        .cheu-bg {
+            background: repeating-linear-gradient(45deg, #000 0px, #111 10px, #000 20px);
         }
 
-        .neon-glow {
-            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
+        .pixel-title {
+            font-family: 'Press+Start+2P', cursive;
+            text-shadow: 4px 4px #000, -4px -4px #000, 4px -4px #000, -4px 4px #000;
         }
 
-        .card-hover {
-            transition: all 0.4s ease;
+        .blink-pink {
+            animation: blink-pink 0.8s infinite;
         }
 
-        .card-hover:hover {
-            transform: translateY(-15px) scale(1.05);
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
+        @keyframes blink-pink {
+            0%, 100% { opacity: 1; color: #ff00aa; }
+            50% { opacity: 0.6; color: #ff69b4; }
         }
 
-        .pulse {
-            animation: pulse 2s infinite;
+        .old-web {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #000;
+            border: 8px solid #ff00aa;
+            box-shadow: 0 0 40px #ff00aa;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+        .guestbook-entry {
+            border-bottom: 4px dotted #ff69b4;
+            padding: 16px;
+            background: rgba(255,0,170,0.05);
+        }
+
+        .guestbook-entry:nth-child(even) {
+            background: rgba(0,255,255,0.05);
         }
     </style>
 </head>
-<body class="hero-bg min-h-screen">
+<body class="cheu-bg">
 
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur-xl border-b border-cyan-500/30">
-        <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center text-black font-black text-3xl neon-glow">TB</div>
-                <h1 class="text-4xl md:text-5xl font-black tracking-widest neon-glow">THÁI BẢO</h1>
-            </div>
-            <nav class="hidden md:flex gap-10 text-lg font-medium">
-                <a href="#about" class="hover:text-cyan-400 transition">VỀ TÔI</a>
-                <a href="#music" class="hover:text-cyan-400 transition">ÂM NHẠC</a>
-                <a href="#fan" class="hover:text-cyan-400 transition">FAN CLUB</a>
-                <a href="#contact" class="hover:text-cyan-400 transition">LIÊN HỆ</a>
-            </nav>
-        </div>
-    </header>
+    <div class="old-web mx-auto my-12 rounded-lg overflow-hidden shadow-2xl border-8 border-pink-600">
 
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center pt-24">
-        <div class="text-center px-6 max-w-5xl">
-            <h2 class="text-6xl md:text-9xl font-black neon-glow mb-6 pulse">
-                THÁI BẢO
-            </h2>
-            <p class="text-3xl md:text-5xl text-cyan-400 font-bold tracking-widest mb-12">
-                "ÂM NHẠC LÀ CUỘC SỐNG, CUỘC SỐNG LÀ ÂM NHẠC"
+        <!-- Header kiểu web 2012 -->
+        <div class="bg-gradient-to-r from-pink-900 to-purple-900 p-8 text-center">
+            <h1 class="text-6xl md:text-8xl font-black pixel-title blink-pink">
+                THÁI BẢO 2012
+            </h1>
+            <p class="text-4xl text-yellow-300 mt-4 font-bold">
+                BẠN TỚ SIÊU NGÁO NHẤT HỆ MẶT TRỜI 🌟
             </p>
+            <p class="text-2xl text-pink-300 mt-2">
+                "Yêu là yêu thôi, không cần lý do nha mấy chế ơi!"
+            </p>
+        </div>
 
-            <div class="flex flex-wrap justify-center gap-8">
-                <a href="#music" class="px-12 py-6 bg-cyan-600 hover:bg-cyan-500 text-black font-black text-2xl rounded-2xl transition-all shadow-lg shadow-cyan-500/50">
-                    NGHE NHẠC NGAY
-                </a>
-                <a href="#fan" class="px-12 py-6 border-2 border-cyan-400 hover:bg-cyan-900/50 text-cyan-400 font-black text-2xl rounded-2xl transition-all">
-                    THAM GIA FANCLUB
-                </a>
+        <!-- Profile kiểu MySpace/Facebook 2012 -->
+        <div class="p-8 grid md:grid-cols-2 gap-12">
+            <div>
+                <div class="text-4xl text-cyan-400 mb-6">INFO CỦA BẢO</div>
+                <ul class="text-2xl space-y-4">
+                    <li>✨ Tên: Thái Bảo (biệt danh: Bảo điên)</li>
+                    <li>🎂 Sinh năm: 1998 (2012 mới 14 tuổi, cute phô mai que)</li>
+                    <li>🏠 Quê quán: Hà Nội, phố cổ, hay lang thang Hồ Gươm</li>
+                    <li>❤️ Tình trạng: Độc thân vui tính, crush thì nhiều mà ngại tỏ tình</li>
+                    <li>🎸 Sở thích: Chơi guitar, rap freestyle, ăn kem Tràng Tiền</li>
+                    <li>💬 Status: "Ai thương Bảo thì comment dưới nha, Bảo rep hết!"</li>
+                </ul>
             </div>
 
-            <div class="mt-20 text-sm md:text-lg font-mono text-cyan-300/80 tracking-widest">
-                OFFICIAL • 2026 • HÀ NỘI • VIỆT NAM
+            <div class="text-center">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" 
+                     alt="Thái Bảo cute 2012" 
+                     class="rounded-full w-64 h-64 mx-auto border-8 border-pink-500 shadow-2xl">
+                <p class="mt-6 text-2xl text-yellow-300 blink-pink">
+                    "Cheu nhất là bạn thân nha mấy chế!"
+                </p>
             </div>
         </div>
-    </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-24 bg-black/60">
-        <div class="max-w-5xl mx-auto px-6">
-            <h2 class="text-6xl font-black neon-glow text-center mb-16">VỀ THÁI BẢO</h2>
+        <!-- Guestbook / Bình luận kiểu 2012 -->
+        <div class="p-8 bg-black/80">
+            <h2 class="text-5xl text-pink-500 mb-8 text-center">GUESTBOOK - AI ĐANG CHEU BẢO?</h2>
             
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="space-y-8">
-                    <p class="text-2xl leading-relaxed">
-                        Thái Bảo – cái tên đã trở thành biểu tượng của sự nổi loạn, đam mê và tài năng âm nhạc đường phố Việt Nam.
-                    </p>
-                    <p class="text-xl text-cyan-300">
-                        Từ những ngày rong ruổi với guitar trên phố cổ Hà Nội, đến sân khấu lớn với hàng triệu view, Thái Bảo luôn giữ tinh thần "sống hết mình, chơi hết sức".
-                    </p>
-                    <div class="text-sm font-mono text-gray-400">
-                        Sinh năm 1998 • Hà Nội • Rapper • Producer • Street Artist
-                    </div>
+            <div class="space-y-8">
+                <div class="guestbook-entry">
+                    <p class="text-2xl text-cyan-300">Ngọc Lan • 15/07/2012</p>
+                    <p class="text-xl">Bảo ơi crush Bảo lâu rồi nhaaaa! Cheu Bảo vl luôn á!</p>
                 </div>
 
-                <div class="relative">
-                    <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-3xl blur-3xl"></div>
-                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27c1d4?w=800&q=80" 
-                         alt="Thái Bảo" 
-                         class="rounded-3xl border-4 border-cyan-500/50 shadow-2xl relative z-10">
+                <div class="guestbook-entry">
+                    <p class="text-2xl text-yellow-300">Minh Minh (bạn thân) • 17/03/2026</p>
+                    <p class="text-xl">Ê Bảo, mày vẫn cheu như ngày nào không? 2012 nhớ mày vl luôn á!</p>
+                </div>
+
+                <div class="guestbook-entry">
+                    <p class="text-2xl text-pink-400">Fan ẩn danh • Hôm nay</p>
+                    <p class="text-xl">Thái Bảo mãi đỉnh! Cheu Bảo đến già luôn nhaaaa ❤️❤️</p>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Music Section -->
-    <section id="music" class="py-24">
-        <div class="max-w-5xl mx-auto px-6">
-            <h2 class="text-6xl font-black neon-glow text-center mb-16">ÂM NHẠC</h2>
-
-            <div class="grid md:grid-cols-3 gap-10">
-                <!-- Song Card 1 -->
-                <div class="card-hover bg-black/70 border border-cyan-500/30 rounded-3xl overflow-hidden">
-                    <div class="h-64 bg-[url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800')] bg-cover"></div>
-                    <div class="p-8">
-                        <h3 class="text-3xl font-bold mb-4">ĐỈNH CAO PHỐ</h3>
-                        <p class="text-cyan-400 mb-4">2025 • 12M views</p>
-                        <p class="text-gray-300">Bài hit đường phố, beat trap nặng đô, lyric đậm chất Hà Nội.</p>
-                    </div>
-                </div>
-
-                <!-- Song Card 2 -->
-                <div class="card-hover bg-black/70 border border-cyan-500/30 rounded-3xl overflow-hidden">
-                    <div class="h-64 bg-[url('https://images.unsplash.com/photo-1493225457124-4f1d5d4a0b0d?w=800')] bg-cover"></div>
-                    <div class="p-8">
-                        <h3 class="text-3xl font-bold mb-4">KHÔNG CẦN LÝ DO</h3>
-                        <p class="text-cyan-400 mb-4">2024 • 8.7M views</p>
-                        <p class="text-gray-300">Ballad rap cảm xúc, dành cho những đêm không ngủ.</p>
-                    </div>
-                </div>
-
-                <!-- Song Card 3 -->
-                <div class="card-hover bg-black/70 border border-cyan-500/30 rounded-3xl overflow-hidden">
-                    <div class="h-64 bg-[url('https://images.unsplash.com/photo-1501612780327-45045538702b?w=800')] bg-cover"></div>
-                    <div class="p-8">
-                        <h3 class="text-3xl font-bold mb-4">HÀ NỘI 12H</h3>
-                        <p class="text-cyan-400 mb-4">2026 • NEW SINGLE</p>
-                        <p class="text-gray-300">Ca khúc mới nhất, đang trending TikTok & YouTube.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Fan Club -->
-    <section id="fan" class="py-24 bg-black/70">
-        <div class="max-w-5xl mx-auto px-6 text-center">
-            <h2 class="text-6xl font-black neon-glow mb-12">THAM GIA FANCLUB</h2>
-            <p class="text-2xl mb-12 text-cyan-300">
-                "BẢO FAN" – cộng đồng những người yêu âm nhạc đường phố, sống thật, chơi hết mình.
+        <!-- Footer retro -->
+        <div class="bg-gradient-to-r from-pink-900 to-purple-900 p-8 text-center text-xl">
+            <p>© 2012 - 2026 THÁI BẢO • BẠN TỚ SIÊU NGÁO</p>
+            <p class="mt-4 text-yellow-300">
+                Cảm ơn đã ghé thăm! Comment bên dưới để Bảo biết bạn đang cheu Bảo nha~
             </p>
-
-            <div class="flex flex-wrap justify-center gap-8 text-xl">
-                <a href="#" class="px-16 py-8 bg-cyan-600 hover:bg-cyan-500 text-black font-black rounded-2xl shadow-lg shadow-cyan-500/50 transition-all">
-                    THAM GIA DISCORD
-                </a>
-                <a href="#" class="px-16 py-8 border-4 border-cyan-400 hover:bg-cyan-900/50 text-cyan-400 font-black rounded-2xl transition-all">
-                    THEO DÕI TIKTOK
-                </a>
-            </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 text-center text-gray-500 border-t border-cyan-900/30">
-        <p>© 2026 THÁI BẢO OFFICIAL • ALL RIGHTS RESERVED</p>
-        <p class="mt-2 text-sm">Hà Nội • Việt Nam • Made with neon & bass</p>
-    </footer>
+    </div>
 
 </body>
 </html>
