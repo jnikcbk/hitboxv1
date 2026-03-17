@@ -3,175 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[ERROR 503] - FORUM ARCHIVE 2003–2008</title>
+    <title>THÁI BẢO | OFFICIAL FANPAGE</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Creepster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@700;900&family=VT323&display=swap" rel="stylesheet">
     <style>
         body {
-            background: #000;
-            color: #00aa00;
-            font-family: 'VT323', monospace;
-            image-rendering: pixelated;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            font-family: 'Orbitron', sans-serif;
             overflow-x: hidden;
         }
 
-        .old-forum {
-            max-width: 980px;
-            margin: 0 auto;
-            background: #111;
-            border: 4px solid #444;
-            box-shadow: inset 0 0 60px #000;
+        .hero-bg {
+            background: url('https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&q=80') center/cover no-repeat fixed;
+            background-blend-mode: overlay;
+            background-color: rgba(0,0,0,0.6);
         }
 
-        .header-bar {
-            background: linear-gradient(#444, #222);
-            border-bottom: 4px solid #888;
-            padding: 12px;
-            color: #fff;
-            font-family: 'Creepster', cursive;
-            text-shadow: 2px 2px #000;
+        .neon-glow {
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
         }
 
-        .post-thread {
-            border-bottom: 2px dashed #333;
-            padding: 16px;
-            background: repeating-linear-gradient(45deg, #0a0a0a, #0a0a0a 10px, #111 10px, #111 20px);
+        .card-hover {
+            transition: all 0.4s ease;
         }
 
-        .post-thread.deleted {
-            opacity: 0.4;
-            filter: grayscale(80%);
+        .card-hover:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
         }
 
-        .glitch {
-            position: relative;
+        .pulse {
+            animation: pulse 2s infinite;
         }
 
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.8;
-        }
-
-        .glitch::before {
-            left: 3px;
-            text-shadow: -3px 0 #f00;
-            animation: glitch1 2s infinite linear alternate-reverse;
-        }
-
-        .glitch::after {
-            left: -3px;
-            text-shadow: 3px 0 #0ff;
-            animation: glitch2 3s infinite linear alternate-reverse;
-        }
-
-        @keyframes glitch1 {
-            0% { clip: rect(0, 999px, 20px, 0); transform: skew(0.2deg); }
-            20% { clip: rect(40px, 999px, 60px, 0); }
-            40% { clip: rect(10px, 999px, 30px, 0); }
-        }
-
-        @keyframes glitch2 {
-            0% { clip: rect(30px, 999px, 50px, 0); transform: skew(-0.4deg); }
-            30% { clip: rect(70px, 999px, 90px, 0); }
-        }
-
-        .static {
-            position: fixed;
-            inset: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="240"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="4"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.08 0"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.12"/></svg>') repeat;
-            pointer-events: none;
-            opacity: 0.35;
-            mix-blend-mode: screen;
-            animation: static-flicker 0.08s infinite alternate;
-        }
-
-        @keyframes static-flicker {
-            0%, 100% { opacity: 0.35; }
-            50% { opacity: 0.18; }
-        }
-
-        .blink {
-            animation: blink 1.2s step-end infinite;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
     </style>
 </head>
-<body class="relative">
+<body class="hero-bg min-h-screen">
 
-    <div class="static"></div>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur-xl border-b border-cyan-500/30">
+        <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center text-black font-black text-3xl neon-glow">TB</div>
+                <h1 class="text-4xl md:text-5xl font-black tracking-widest neon-glow">THÁI BẢO</h1>
+            </div>
+            <nav class="hidden md:flex gap-10 text-lg font-medium">
+                <a href="#about" class="hover:text-cyan-400 transition">VỀ TÔI</a>
+                <a href="#music" class="hover:text-cyan-400 transition">ÂM NHẠC</a>
+                <a href="#fan" class="hover:text-cyan-400 transition">FAN CLUB</a>
+                <a href="#contact" class="hover:text-cyan-400 transition">LIÊN HỆ</a>
+            </nav>
+        </div>
+    </header>
 
-    <div class="old-forum mx-auto my-8 md:my-16 rounded-lg overflow-hidden shadow-2xl">
-        <!-- Header giả lập diễn đàn cũ -->
-        <div class="header-bar text-center">
-            <h1 class="text-5xl md:text-7xl glitch" data-text="[FORUM ARCHIVE]">
-                [FORUM ARCHIVE]
-            </h1>
-            <p class="text-2xl md:text-4xl text-yellow-400 blink mt-2">
-                ACCESS DENIED • 503 SERVICE UNAVAILABLE
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-24">
+        <div class="text-center px-6 max-w-5xl">
+            <h2 class="text-6xl md:text-9xl font-black neon-glow mb-6 pulse">
+                THÁI BẢO
+            </h2>
+            <p class="text-3xl md:text-5xl text-cyan-400 font-bold tracking-widest mb-12">
+                "ÂM NHẠC LÀ CUỘC SỐNG, CUỘC SỐNG LÀ ÂM NHẠC"
             </p>
-        </div>
 
-        <!-- Các "thread" giả lập bị xóa / hack -->
-        <div class="p-6 space-y-10">
-            <div class="post-thread">
-                <div class="flex justify-between text-sm text-gray-500 mb-4">
-                    <span>Thread #1337 • Posted by: Guest_666 • 14/07/2005</span>
-                    <span class="text-red-500 blink">DELETED BY ADMIN</span>
-                </div>
-                <h3 class="text-3xl text-yellow-300 mb-4">CÁCH HACK GAME GUNBOUND NHANH NHẤT 2005</h3>
-                <p class="text-lg leading-relaxed">
-                    Mọi người ơi share tool hack gunbound đi, tui chơi mãi thua hoài. Có ai có file .exe crack không?  
-                    [ATTACHMENT REMOVED] • [LINK EXPIRED]
-                </p>
+            <div class="flex flex-wrap justify-center gap-8">
+                <a href="#music" class="px-12 py-6 bg-cyan-600 hover:bg-cyan-500 text-black font-black text-2xl rounded-2xl transition-all shadow-lg shadow-cyan-500/50">
+                    NGHE NHẠC NGAY
+                </a>
+                <a href="#fan" class="px-12 py-6 border-2 border-cyan-400 hover:bg-cyan-900/50 text-cyan-400 font-black text-2xl rounded-2xl transition-all">
+                    THAM GIA FANCLUB
+                </a>
             </div>
 
-            <div class="post-thread deleted">
-                <div class="flex justify-between text-sm text-gray-600 mb-4">
-                    <span>Thread #420 • Posted by: xXxDarkLordxXx • 03/11/2006</span>
-                    <span class="text-red-600">PERMANENTLY PURGED</span>
-                </div>
-                <h3 class="text-3xl text-gray-500 line-through mb-4">TOP 10 BÍ KÍP CHƠI Võ Lâm Truyền Kỳ</h3>
-                <p class="text-lg leading-relaxed opacity-50">
-                    1. Farm cua hang ngày  
-                    2. Join bang mạnh  
-                    ...  
-                    [POST DELETED BY MODERATOR]
-                </p>
-            </div>
-
-            <div class="post-thread">
-                <div class="flex justify-between text-sm text-gray-500 mb-4">
-                    <span>Thread #999 • Posted by: Anonymous • 17/03/2026</span>
-                    <span class="text-red-400 blink">LAST KNOWN POST</span>
-                </div>
-                <h3 class="text-3xl text-pink-400 mb-4 glitch" data-text="TÔI ĐÃ THẤY NÓ">
-                    TÔI ĐÃ THẤY NÓ
-                </h3>
-                <p class="text-lg leading-relaxed text-pink-300">
-                    Nó không phải người.  
-                    Nó ở trong code.  
-                    Đừng mở link cuối cùng.  
-                    [redacted] • [file corrupted]
-                </p>
+            <div class="mt-20 text-sm md:text-lg font-mono text-cyan-300/80 tracking-widest">
+                OFFICIAL • 2026 • HÀ NỘI • VIỆT NAM
             </div>
         </div>
+    </section>
 
-        <!-- Footer lỗi thời -->
-        <div class="bg-[#0a0a0a] border-t-4 border-gray-700 p-6 text-center text-sm text-gray-500">
-            Powered by PHP-Nuke v7.9 • © 2003-2008 VoidNet Forums  
-            <br>
-            <span class="text-red-600 blink">WARNING: DATABASE CORRUPTION DETECTED • DO NOT REFRESH</span>
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-black/60">
+        <div class="max-w-5xl mx-auto px-6">
+            <h2 class="text-6xl font-black neon-glow text-center mb-16">VỀ THÁI BẢO</h2>
+            
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <p class="text-2xl leading-relaxed">
+                        Thái Bảo – cái tên đã trở thành biểu tượng của sự nổi loạn, đam mê và tài năng âm nhạc đường phố Việt Nam.
+                    </p>
+                    <p class="text-xl text-cyan-300">
+                        Từ những ngày rong ruổi với guitar trên phố cổ Hà Nội, đến sân khấu lớn với hàng triệu view, Thái Bảo luôn giữ tinh thần "sống hết mình, chơi hết sức".
+                    </p>
+                    <div class="text-sm font-mono text-gray-400">
+                        Sinh năm 1998 • Hà Nội • Rapper • Producer • Street Artist
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-3xl blur-3xl"></div>
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27c1d4?w=800&q=80" 
+                         alt="Thái Bảo" 
+                         class="rounded-3xl border-4 border-cyan-500/50 shadow-2xl relative z-10">
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Music Section -->
+    <section id="music" class="py-24">
+        <div class="max-w-5xl mx-auto px-6">
+            <h2 class="text-6xl font-black neon-glow text-center mb-16">ÂM NHẠC</h2>
+
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Song Card 1 -->
+                <div class="card-hover bg-black/70 border border-cyan-500/30 rounded-3xl overflow-hidden">
+                    <div class="h-64 bg-[url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800')] bg-cover"></div>
+                    <div class="p-8">
+                        <h3 class="text-3xl font-bold mb-4">ĐỈNH CAO PHỐ</h3>
+                        <p class="text-cyan-400 mb-4">2025 • 12M views</p>
+                        <p class="text-gray-300">Bài hit đường phố, beat trap nặng đô, lyric đậm chất Hà Nội.</p>
+                    </div>
+                </div>
+
+                <!-- Song Card 2 -->
+                <div class="card-hover bg-black/70 border border-cyan-500/30 rounded-3xl overflow-hidden">
+                    <div class="h-64 bg-[url('https://images.unsplash.com/photo-1493225457124-4f1d5d4a0b0d?w=800')] bg-cover"></div>
+                    <div class="p-8">
+                        <h3 class="text-3xl font-bold mb-4">KHÔNG CẦN LÝ DO</h3>
+                        <p class="text-cyan-400 mb-4">2024 • 8.7M views</p>
+                        <p class="text-gray-300">Ballad rap cảm xúc, dành cho những đêm không ngủ.</p>
+                    </div>
+                </div>
+
+                <!-- Song Card 3 -->
+                <div class="card-hover bg-black/70 border border-cyan-500/30 rounded-3xl overflow-hidden">
+                    <div class="h-64 bg-[url('https://images.unsplash.com/photo-1501612780327-45045538702b?w=800')] bg-cover"></div>
+                    <div class="p-8">
+                        <h3 class="text-3xl font-bold mb-4">HÀ NỘI 12H</h3>
+                        <p class="text-cyan-400 mb-4">2026 • NEW SINGLE</p>
+                        <p class="text-gray-300">Ca khúc mới nhất, đang trending TikTok & YouTube.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fan Club -->
+    <section id="fan" class="py-24 bg-black/70">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <h2 class="text-6xl font-black neon-glow mb-12">THAM GIA FANCLUB</h2>
+            <p class="text-2xl mb-12 text-cyan-300">
+                "BẢO FAN" – cộng đồng những người yêu âm nhạc đường phố, sống thật, chơi hết mình.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-8 text-xl">
+                <a href="#" class="px-16 py-8 bg-cyan-600 hover:bg-cyan-500 text-black font-black rounded-2xl shadow-lg shadow-cyan-500/50 transition-all">
+                    THAM GIA DISCORD
+                </a>
+                <a href="#" class="px-16 py-8 border-4 border-cyan-400 hover:bg-cyan-900/50 text-cyan-400 font-black rounded-2xl transition-all">
+                    THEO DÕI TIKTOK
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 text-center text-gray-500 border-t border-cyan-900/30">
+        <p>© 2026 THÁI BẢO OFFICIAL • ALL RIGHTS RESERVED</p>
+        <p class="mt-2 text-sm">Hà Nội • Việt Nam • Made with neon & bass</p>
+    </footer>
 
 </body>
 </html>
